@@ -1,5 +1,8 @@
 ---
 import { WHATSAPP } from "../lib/enlaces";
+import { contenido } from "../lib/contenido";
+
+const cta = contenido.cta;
 ---
 
 <section class="relative overflow-hidden py-28 text-center sm:py-36 lg:py-44">
@@ -29,11 +32,10 @@ import { WHATSAPP } from "../lib/enlaces";
       </defs>
     </svg>
 
-    <h2 class="reveal font-display text-4xl leading-tight font-normal text-balance sm:text-5xl lg:text-6xl">
-      La noche te está<br />esperando
+    <h2 class="reveal font-display text-4xl leading-tight font-normal text-balance sm:text-5xl lg:text-6xl" set:html={cta.titulo}>
     </h2>
     <p class="reveal mx-auto mt-5 max-w-md text-tenue">
-      Solo hay tres domos. Elige tu fecha antes de que se apague la última luz.
+      {cta.texto}
     </p>
     <a
       href={WHATSAPP}
@@ -41,7 +43,7 @@ import { WHATSAPP } from "../lib/enlaces";
       rel="noopener"
       class="reveal mt-9 inline-block rounded-full bg-dorado px-8 py-3.5 text-sm font-semibold tracking-wide text-noche-deep shadow-[0_4px_18px_#e8a54b59] transition duration-150 hover:shadow-[0_6px_26px_#e8a54b8c] active:scale-95"
     >
-      Reserva tu noche
+      {cta.label}
     </a>
   </div>
 </section>

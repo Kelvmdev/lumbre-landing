@@ -1,16 +1,20 @@
 ---
 // Formulario de reserva → arma un mensaje de WhatsApp (sin backend).
 // Patrón checkout-WhatsApp (manual-09): wa.me + encodeURIComponent, popup dentro
-// del clic. Las opciones de domo deben coincidir con Domos.astro.
+// del clic. Las opciones de domo salen de los mismos domos (DRY con Domos.astro).
+import { contenido } from "../lib/contenido";
+
+const reserva = contenido.reserva;
+const opcionesDomo = ["Sin preferencia", ...contenido.domos.map((d) => d.nombre)];
 ---
 
 <section id="reservar" class="py-20 sm:py-28 lg:py-36">
   <div class="mx-auto max-w-3xl px-5 sm:px-8">
     <div class="reveal mb-8 text-center sm:mb-10">
-      <p class="mb-2 text-xs tracking-[0.24em] text-dorado-suave uppercase">Reserva</p>
-      <h2 class="font-display text-3xl font-normal sm:text-4xl lg:text-5xl">Aparta tu noche</h2>
+      <p class="mb-2 text-xs tracking-[0.24em] text-dorado-suave uppercase">{reserva.eyebrow}</p>
+      <h2 class="font-display text-3xl font-normal sm:text-4xl lg:text-5xl">{reserva.titulo}</h2>
       <p class="mt-4 text-tenue">
-        Cuéntanos cuándo y cuántos son. Armamos tu reserva y la confirmamos por WhatsApp.
+        {reserva.texto}
       </p>
     </div>
 
@@ -46,10 +50,7 @@
             name="domo"
             class="rounded-xl border border-linea bg-noche-deep px-4 py-2.5 font-body text-hueso transition focus-visible:border-dorado-suave"
           >
-            <option>Sin preferencia</option>
-            <option>Domo Estrella</option>
-            <option>Domo Luna</option>
-            <option>Domo Fuego</option>
+            {opcionesDomo.map((o) => <option>{o}</option>)}
           </select>
         </div>
       </div>

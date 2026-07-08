@@ -10,6 +10,7 @@ import "../styles/global.css";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import { TELEFONO_E164, COORDS } from "../lib/enlaces";
+import { contenido } from "../lib/contenido";
 
 interface Props {
   titulo?: string;
@@ -17,8 +18,8 @@ interface Props {
   noindex?: boolean;
 }
 const {
-  titulo = "LUMBRE · Glamping bajo las estrellas",
-  descripcion = "Un domo geodésico en el bosque, el silencio de la naturaleza y un cielo que se enciende al caer la noche. Desconecta de todo en LUMBRE.",
+  titulo = contenido.seo.titulo,
+  descripcion = contenido.seo.descripcion,
   noindex = false,
 } = Astro.props;
 
@@ -30,7 +31,7 @@ const ogImage = new URL("/og.png", baseUrl).href;
 const lodging = {
   "@context": "https://schema.org",
   "@type": "LodgingBusiness",
-  name: "LUMBRE Glamping",
+  name: contenido.seo.nombreNegocio,
   description: descripcion,
   url: baseUrl.href,
   image: ogImage,

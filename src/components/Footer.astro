@@ -1,6 +1,8 @@
 ---
 import { REDES, TELEFONO_E164, EMAIL, UBICACION, NAV } from "../lib/enlaces";
+import { contenido } from "../lib/contenido";
 const anio = new Date().getFullYear();
+const pie = contenido.footer;
 
 // mismas anclas del nav, sin "Contacto" (el footer ya tiene su sección de contacto)
 const explorar = NAV.filter((e) => e.href !== "#contacto");
@@ -19,10 +21,10 @@ const redes = [
       <div>
         <div class="flex items-center gap-2 font-display text-lg tracking-[0.14em] text-hueso">
           <span aria-hidden="true" class="h-2 w-2 rounded-full bg-dorado shadow-[0_0_12px_var(--color-dorado)]"></span>
-          LUMBRE
+          {contenido.nav.marca}
         </div>
         <p class="mt-4 max-w-xs font-body text-sm leading-relaxed text-tenue">
-          Glamping de autor en el bosque. Desconecta de todo, conéctate con el cielo.
+          {pie.tagline}
         </p>
       </div>
 
@@ -49,12 +51,12 @@ const redes = [
       <!-- reserva -->
       <div>
         <h3 class="font-body text-xs tracking-[0.2em] text-dorado-suave uppercase">Reserva</h3>
-        <p class="mt-4 font-body text-sm text-tenue">Cada noche empieza al atardecer.</p>
+        <p class="mt-4 font-body text-sm text-tenue">{pie.reservaTexto}</p>
         <a
           href="#reservar"
           class="mt-4 inline-block rounded-full bg-dorado px-6 py-2.5 font-body text-sm font-semibold text-noche-deep transition duration-150 active:scale-95"
         >
-          Reserva tu noche
+          {pie.reservaLabel}
         </a>
       </div>
     </div>

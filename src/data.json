@@ -1,4 +1,11 @@
 {
+  "hero": {
+    "eyebrow": "Glamping en el bosque · Antioquia",
+    "titulo": "Duerme bajo<br />las <em class=\"text-dorado-suave\">estrellas</em>",
+    "lede": "Un domo geodésico, el silencio del bosque y un cielo que se enciende cuando cae la noche. Sin señal, sin prisa.",
+    "ctaPrimario": "Reserva tu noche",
+    "ctaSecundario": "Ver los domos"
+  },
   "galeria": [
     { "img": "domo-atardecer", "titulo": "Domo al atardecer", "big": true, "alt": "Domo geodésico blanco en un paisaje de montaña verde al atardecer, con cielo dorado." },
     { "img": "sendero-bosque", "titulo": "Sendero del bosque", "big": false, "alt": "Sendero de tierra entre árboles con niebla y luz cálida al fondo." },
@@ -43,5 +50,86 @@
         "Cena bajo las estrellas incluida"
       ]
     }
-  ]
+  ],
+  "cielo": {
+    "titulo": "El cielo se<br />apaga contigo",
+    "texto": "Cada metro que bajas, la tarde cede. El dorado se vuelve púrpura, el púrpura se vuelve noche — y entonces aparecen ellas."
+  },
+  "experiencia": {
+    "eyebrow": "La experiencia",
+    "titulo": "Tres razones para quedarte",
+    "features": [
+      {
+        "titulo": "Domo geodésico",
+        "desc": "Cama king frente a un ventanal curvo. Te duermes mirando el cielo, te despierta el amanecer.",
+        "icono": "<path d=\"M12 3 3 20h18L12 3Z\"/><path d=\"M8 20l4-7 4 7\"/>"
+      },
+      {
+        "titulo": "Cena bajo las estrellas",
+        "desc": "Mesa servida al aire libre, fogata incluida y el rumor del bosque de banda sonora.",
+        "icono": "<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2\"/>"
+      },
+      {
+        "titulo": "Sendero al amanecer",
+        "desc": "Ruta guiada entre niebla y árboles centenarios para recibir el primer sol del día.",
+        "icono": "<path d=\"M3 18h18\"/><path d=\"M6 18c0-6 3-9 6-9s6 3 6 9\"/><path d=\"M12 9V4\"/>"
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "Antes de reservar",
+    "titulo": "Preguntas frecuentes",
+    "preguntas": [
+      {
+        "q": "¿Cuánto cuesta una noche?",
+        "a": "La tarifa varía según la fecha y la temporada. Escríbenos por WhatsApp y te confirmamos el precio vigente y la disponibilidad al instante."
+      },
+      {
+        "q": "¿Cuál es la estancia mínima?",
+        "a": "La estancia mínima es de dos noches, ideal para desconectar sin prisa. En fechas puntuales puede variar; confírmalo al reservar."
+      },
+      {
+        "q": "¿Aceptan mascotas?",
+        "a": "Sí, recibimos una mascota por reserva avisando con antelación, para cuidar el entorno y a los demás huéspedes."
+      },
+      {
+        "q": "¿A qué hora es el check-in y el check-out?",
+        "a": "Check-in desde las 3:00 p. m. y check-out hasta las 12:00 del mediodía. Si necesitas otro horario, escríbenos y vemos cómo acomodarlo."
+      },
+      {
+        "q": "¿Hay señal o wifi en el domo?",
+        "a": "Hay cobertura móvil suficiente para lo esencial. No prometemos wifi rápido a propósito: la idea de LUMBRE es desconectar y mirar el cielo."
+      }
+    ]
+  },
+  "mapa": {
+    "eyebrow": "Cómo llegar",
+    "titulo": "Nos escondemos<br />en el bosque",
+    "texto": "A 20 minutos de {ubicacion}, por un camino de montaña entre niebla y árboles. Te enviamos la ruta exacta al confirmar tu reserva.",
+    "cta": "Abrir en Google Maps →"
+  },
+  "reserva": {
+    "eyebrow": "Reserva",
+    "titulo": "Aparta tu noche",
+    "texto": "Cuéntanos cuándo y cuántos son. Armamos tu reserva y la confirmamos por WhatsApp."
+  },
+  "cta": {
+    "titulo": "La noche te está<br />esperando",
+    "texto": "Solo hay tres domos. Elige tu fecha antes de que se apague la última luz.",
+    "label": "Reserva tu noche"
+  },
+  "footer": {
+    "tagline": "Glamping de autor en el bosque. Desconecta de todo, conéctate con el cielo.",
+    "reservaTexto": "Cada noche empieza al atardecer.",
+    "reservaLabel": "Reserva tu noche"
+  },
+  "nav": {
+    "marca": "LUMBRE",
+    "ctaReserva": "Reserva tu noche"
+  },
+  "seo": {
+    "titulo": "LUMBRE · Glamping bajo las estrellas",
+    "descripcion": "Un domo geodésico en el bosque, el silencio de la naturaleza y un cielo que se enciende al caer la noche. Desconecta de todo en LUMBRE.",
+    "nombreNegocio": "LUMBRE Glamping"
+  }
 }

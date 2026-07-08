@@ -1,4 +1,7 @@
 ---
+import { contenido } from "../lib/contenido";
+
+const hero = contenido.hero;
 ---
 
 <section id="inicio" class="relative flex min-h-[96vh] flex-col justify-center overflow-hidden">
@@ -57,26 +60,25 @@
 
   <div class="mx-auto w-full max-w-6xl px-6">
     <p class="eyebrow mb-5 text-xs tracking-[0.28em] text-dorado-suave uppercase sm:text-sm">
-      Glamping en el bosque · Antioquia
+      {hero.eyebrow}
     </p>
-    <h1 class="text-[clamp(2.9rem,9vw,6.4rem)] leading-[1.02] tracking-[-0.01em] font-display font-normal text-hueso [text-shadow:0_2px_40px_rgba(0,0,0,.35)] [text-wrap:balance]">
-      Duerme bajo<br />las <em class="text-dorado-suave">estrellas</em>
+    <h1 class="text-[clamp(2.9rem,9vw,6.4rem)] leading-[1.02] tracking-[-0.01em] font-display font-normal text-hueso [text-shadow:0_2px_40px_rgba(0,0,0,.35)] [text-wrap:balance]" set:html={hero.titulo}>
     </h1>
     <p class="lede mt-6 max-w-[34ch] text-lg text-hueso opacity-90">
-      Un domo geodésico, el silencio del bosque y un cielo que se enciende cuando cae la noche. Sin señal, sin prisa.
+      {hero.lede}
     </p>
     <div class="mt-10 flex flex-wrap gap-4">
       <a
         href="#reservar"
         class="hero-cta rounded-full bg-dorado px-6 py-2.5 font-body text-sm font-semibold tracking-[0.02em] text-noche-deep shadow-[0_4px_18px_rgba(232,165,75,.35)] transition duration-150 hover:shadow-[0_6px_26px_rgba(232,165,75,.55)] active:scale-95"
       >
-        Reserva tu noche
+        {hero.ctaPrimario}
       </a>
       <a
         href="#domos"
         class="hero-cta rounded-full border border-[#f5f0e659] px-6 py-2.5 font-body text-sm tracking-[0.02em] text-hueso transition duration-150 hover:border-dorado-suave hover:text-dorado-suave active:scale-95"
       >
-        Ver los domos
+        {hero.ctaSecundario}
       </a>
     </div>
   </div>

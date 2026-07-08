@@ -1,28 +1,10 @@
 ---
 // Un solo array alimenta DOS salidas: el acordeón visible y el schema FAQPage
 // (GEO). Respuestas en texto plano para que sirvan igual en ambos.
-const faqs = [
-  {
-    q: "¿Cuánto cuesta una noche?",
-    a: "La tarifa varía según la fecha y la temporada. Escríbenos por WhatsApp y te confirmamos el precio vigente y la disponibilidad al instante.",
-  },
-  {
-    q: "¿Cuál es la estancia mínima?",
-    a: "La estancia mínima es de dos noches, ideal para desconectar sin prisa. En fechas puntuales puede variar; confírmalo al reservar.",
-  },
-  {
-    q: "¿Aceptan mascotas?",
-    a: "Sí, recibimos una mascota por reserva avisando con antelación, para cuidar el entorno y a los demás huéspedes.",
-  },
-  {
-    q: "¿A qué hora es el check-in y el check-out?",
-    a: "Check-in desde las 3:00 p. m. y check-out hasta las 12:00 del mediodía. Si necesitas otro horario, escríbenos y vemos cómo acomodarlo.",
-  },
-  {
-    q: "¿Hay señal o wifi en el domo?",
-    a: "Hay cobertura móvil suficiente para lo esencial. No prometemos wifi rápido a propósito: la idea de LUMBRE es desconectar y mirar el cielo.",
-  },
-];
+import { contenido } from "../lib/contenido";
+
+const faq = contenido.faq;
+const faqs = faq.preguntas;
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -38,9 +20,9 @@ const faqSchema = {
 <section id="faq" class="py-20 sm:py-28 lg:py-36">
   <div class="mx-auto max-w-3xl px-5 sm:px-8">
     <div class="reveal mb-10 sm:mb-14">
-      <p class="mb-2 text-xs tracking-[0.24em] text-dorado-suave uppercase">Antes de reservar</p>
+      <p class="mb-2 text-xs tracking-[0.24em] text-dorado-suave uppercase">{faq.eyebrow}</p>
       <h2 class="font-display text-3xl font-normal sm:text-4xl lg:text-5xl">
-        Preguntas frecuentes
+        {faq.titulo}
       </h2>
     </div>
 

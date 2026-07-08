@@ -20,6 +20,14 @@ export const IMAGENES: Record<string, ImageMetadata> = {
   "sendero-bosque": senderoBosque,
 };
 
+export interface Hero {
+  eyebrow: string;
+  titulo: string;
+  lede: string;
+  ctaPrimario: string;
+  ctaSecundario: string;
+}
+
 export interface Foto {
   img: string;
   titulo: string;
@@ -36,9 +44,30 @@ export interface Domo {
   detalles: string[];
 }
 
+export interface Feature {
+  titulo: string;
+  desc: string;
+  icono: string;
+}
+
+export interface Pregunta {
+  q: string;
+  a: string;
+}
+
 export interface Contenido {
+  hero: Hero;
   galeria: Foto[];
   domos: Domo[];
+  cielo: { titulo: string; texto: string };
+  experiencia: { eyebrow: string; titulo: string; features: Feature[] };
+  faq: { eyebrow: string; titulo: string; preguntas: Pregunta[] };
+  mapa: { eyebrow: string; titulo: string; texto: string; cta: string };
+  reserva: { eyebrow: string; titulo: string; texto: string };
+  cta: { titulo: string; texto: string; label: string };
+  footer: { tagline: string; reservaTexto: string; reservaLabel: string };
+  nav: { marca: string; ctaReserva: string };
+  seo: { titulo: string; descripcion: string; nombreNegocio: string };
 }
 
 export const contenido = datos as Contenido;

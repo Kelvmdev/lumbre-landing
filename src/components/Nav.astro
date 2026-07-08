@@ -1,12 +1,14 @@
 ---
 import { NAV as enlaces } from "../lib/enlaces";
+import { contenido } from "../lib/contenido";
+const nav = contenido.nav;
 ---
 
 <nav class="sticky top-0 z-20 border-b border-[#f5f0e614] bg-[#0f1729cc] backdrop-blur-md">
   <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
     <a href="/" class="flex items-center gap-2 font-display text-lg tracking-[0.14em] text-hueso md:text-xl">
       <span aria-hidden="true" class="h-2 w-2 rounded-full bg-dorado shadow-[0_0_12px_var(--color-dorado)]"></span>
-      LUMBRE
+      {nav.marca}
     </a>
 
     <!-- enlaces desktop -->
@@ -18,7 +20,7 @@ import { NAV as enlaces } from "../lib/enlaces";
         href="#reservar"
         class="rounded-full bg-dorado px-6 py-2.5 font-body text-sm font-semibold tracking-[0.02em] text-noche-deep shadow-[0_4px_18px_rgba(232,165,75,.35)] transition duration-150 hover:shadow-[0_6px_26px_rgba(232,165,75,.55)] active:scale-95"
       >
-        Reserva tu noche
+        {nav.ctaReserva}
       </a>
     </div>
 
@@ -48,7 +50,7 @@ import { NAV as enlaces } from "../lib/enlaces";
         href="#reservar"
         class="mt-2 inline-block w-fit rounded-full bg-dorado px-6 py-2.5 font-body text-sm font-semibold text-noche-deep transition duration-150 active:scale-95"
       >
-        Reserva tu noche
+        {nav.ctaReserva}
       </a>
     </div>
   </div>
