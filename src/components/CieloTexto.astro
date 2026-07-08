@@ -1,0 +1,23 @@
+---
+---
+
+<section class="relative py-[clamp(5rem,12vw,9rem)]">
+  <div class="mx-auto w-full max-w-6xl px-6">
+    <h2 class="cielo-mask reveal text-[clamp(3rem,13vw,10rem)] leading-[1] tracking-[-0.02em] font-display font-bold uppercase [text-wrap:balance]">
+      El cielo se<br />apaga contigo
+    </h2>
+    <p class="reveal mt-7 max-w-[44ch] text-base text-tenue sm:text-lg">
+      Cada metro que bajas, la tarde cede. El dorado se vuelve púrpura, el púrpura se vuelve noche — y entonces aparecen ellas.
+    </p>
+  </div>
+</section>
+
+<style>
+  /* texto-máscara: el degradado dorado→púrpura recorta el propio texto del H2 */
+  .cielo-mask {
+    background: linear-gradient(120deg, #f0c88a, #e8a54b 30%, #8a4f66 70%, #5a4370);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+</style>

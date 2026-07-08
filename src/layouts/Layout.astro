@@ -1,0 +1,120 @@
+---
+// Fuentes self-host (sin requests render-blocking a Google Fonts).
+// Variable fonts: un solo woff2 por familia cubre todos los pesos.
+import "@fontsource-variable/fraunces"; // display (titulares, LCP)
+import "@fontsource-variable/inter";    // cuerpo / UI
+// URL local (con hash de Vite) del woff2 de Fraunces para precargarlo: es la
+// fuente del H1 del hero (LCP), así llega antes y el título no parpadea.
+import frauncesWoff2 from "@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url";
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import { TELEFONO_E164 } from "../lib/enlaces";
+
+interface Props {
+  titulo?: string;
+  descripcion?: string;
+  noindex?: boolean;
+}
+const {
+  titulo = "LUMBRE · Glamping bajo las estrellas",
+  descripcion = "Un domo geodésico en el bosque, el silencio de la naturaleza y un cielo que se enciende al caer la noche. Desconecta de todo en LUMBRE.",
+  noindex = false,
+} = Astro.props;
+
+const baseUrl = Astro.site ?? new URL("https://lumbre-landing.vercel.app");
+const canonical = new URL(Astro.url.pathname, baseUrl).href;
+const ogImage = new URL("/og.png", baseUrl).href;
+
+// ── GEO / JSON-LD: para que Google e IAs entiendan y citen el negocio ──
+const lodging = {
+  "@context": "https://schema.org",
+  "@type": "LodgingBusiness",
+  name: "LUMBRE Glamping",
+  description: descripcion,
+  url: baseUrl.href,
+  image: ogImage,
+  priceRange: "$$",
+  telephone: TELEFONO_E164,
+  address: {
+    "@type": "PostalAddress",
+    addressRegion: "Antioquia",
+    addressCountry: "CO",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 5.5983,
+    longitude: -75.8186,
+  },
+  amenityFeature: [
+    { "@type": "LocationFeatureSpecification", name: "Domo geodésico", value: true },
+    { "@type": "LocationFeatureSpecification", name: "Cena bajo las estrellas", value: true },
+    { "@type": "LocationFeatureSpecification", name: "Sendero guiado", value: true },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO base -->
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+    <meta name="theme-color" content="#7d4029" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="LUMBRE" />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Domo geodésico iluminado en el bosque bajo un cielo estrellado — LUMBRE Glamping" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={titulo} />
+    <meta name="twitter:description" content={descripcion} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- GEO: datos estructurados -->
+    <script type="application/ld+json" set:html={JSON.stringify(lodging)} />
+
+    <!-- Preload de la fuente del H1 (LCP) servida localmente -->
+    <link rel="preload" as="font" type="font/woff2" href={frauncesWoff2} crossorigin />
+  </head>
+  <body class="flex min-h-svh flex-col antialiased">
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-dorado focus:px-4 focus:py-2 focus:font-body focus:text-noche"
+    >
+      Saltar al contenido
+    </a>
+
+    <!-- Starfield: canvas fijo que se enciende al caer la noche (lo controla GSAP) -->
+    <canvas id="estrellas" class="pointer-events-none fixed inset-0 -z-10 opacity-0" aria-hidden="true"></canvas>
+
+    <Nav />
+    <main id="contenido" tabindex="-1" class="flex-1 outline-none">
+      <slot />
+    </main>
+    <Footer />
+
+    <!-- El cine: Lenis + parallax + reveals + estrellas (respeta reduced-motion) -->
+    <script>
+      import "../scripts/cine";
+    </script>
+  </body>
+</html>

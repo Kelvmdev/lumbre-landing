@@ -1,0 +1,64 @@
+---
+import { Image } from "astro:assets";
+import domoAtardecer from "../assets/fotos/domo-atardecer.jpg";
+import senderoBosque from "../assets/fotos/sendero-bosque.jpg";
+import fogata from "../assets/fotos/fogata.jpg";
+import cieloNocturno from "../assets/fotos/cielo-nocturno.jpg";
+import interiorDomo from "../assets/fotos/interior-domo.jpg";
+
+// Fotos de Pexels (licencia libre). `big` = tarjeta destacada (2 columnas).
+// El alt es descriptivo real (accesibilidad), el título es la etiqueta visible.
+const fotos = [
+  { img: domoAtardecer, titulo: "Domo al atardecer", big: true,
+    alt: "Domo geodésico blanco en un paisaje de montaña verde al atardecer, con cielo dorado." },
+  { img: senderoBosque, titulo: "Sendero del bosque",
+    alt: "Sendero de tierra entre árboles con niebla y luz cálida al fondo." },
+  { img: fogata, titulo: "Fogata al anochecer",
+    alt: "Persona junto a una fogata al aire libre en la hora azul del anochecer." },
+  { img: cieloNocturno, titulo: "Cielo nocturno",
+    alt: "Cielo nocturno estrellado con la Vía Láctea sobre la naturaleza." },
+  { img: interiorDomo, titulo: "Interior del domo",
+    alt: "Interior acogedor de un domo glamping con cama, luces cálidas y estufa encendida." },
+];
+---
+
+<section id="galeria" class="py-20 sm:py-28 lg:py-36">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <div class="reveal mb-10 sm:mb-14">
+      <p class="mb-2 text-xs tracking-[0.24em] text-dorado-suave uppercase">Galería</p>
+      <h2 class="font-display text-3xl font-normal sm:text-4xl lg:text-5xl">
+        El lugar, hora por hora
+      </h2>
+    </div>
+
+    <div class="galeria-grid grid grid-cols-2 gap-4 md:grid-cols-3">
+      {fotos.map((foto) => (
+        <div
+          class:list={[
+            "reveal group relative overflow-hidden rounded-2xl border border-linea",
+            foto.big ? "col-span-2 aspect-[3/2] md:aspect-auto" : "aspect-[3/4]",
+          ]}
+        >
+          <Image
+            src={foto.img}
+            alt={foto.alt}
+            widths={[400, 800, 1200, 1600]}
+            sizes={foto.big ? "(min-width:768px) 66vw, 100vw" : "(min-width:768px) 33vw, 50vw"}
+            loading="lazy"
+            class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+          />
+          <span class="tile-caption pointer-events-none absolute bottom-0 w-full px-4 pt-10 pb-3.5 text-sm font-medium text-white">
+            {foto.titulo}
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* velo oscuro abajo para que el título se lea sobre cualquier foto */
+  .tile-caption {
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+  }
+</style>

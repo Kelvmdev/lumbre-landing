@@ -1,0 +1,91 @@
+---
+import { WHATSAPP } from "../lib/enlaces";
+const enlaces = [
+  { href: "#exp", texto: "Experiencia" },
+  { href: "#domos", texto: "Domos" },
+  { href: "#galeria", texto: "Galería" },
+  { href: "#contacto", texto: "Contacto" },
+];
+---
+
+<nav class="sticky top-0 z-20 border-b border-[#f5f0e614] bg-[#0f1729cc] backdrop-blur-md">
+  <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
+    <a href="#" class="flex items-center gap-2 font-display text-lg tracking-[0.14em] text-hueso md:text-xl">
+      <span aria-hidden="true" class="h-2 w-2 rounded-full bg-dorado shadow-[0_0_12px_var(--color-dorado)]"></span>
+      LUMBRE
+    </a>
+
+    <!-- enlaces desktop -->
+    <div class="hidden items-center gap-8 font-body text-xs tracking-[0.08em] uppercase md:flex">
+      {enlaces.map((e) => (
+        <a href={e.href} class="text-tenue transition hover:text-dorado-suave">{e.texto}</a>
+      ))}
+      <a
+        href={WHATSAPP}
+        target="_blank"
+        rel="noopener"
+        class="rounded-full bg-dorado px-6 py-2.5 font-body text-sm font-semibold tracking-[0.02em] text-noche-deep shadow-[0_4px_18px_rgba(232,165,75,.35)] transition duration-150 hover:shadow-[0_6px_26px_rgba(232,165,75,.55)] active:scale-95"
+      >
+        Reserva tu noche
+      </a>
+    </div>
+
+    <!-- hamburguesa móvil -->
+    <button
+      id="btn-menu"
+      class="text-hueso transition duration-150 active:scale-95 md:hidden"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="menu-movil"
+    >
+      <svg id="icono-menu" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path id="linea-superior" d="M4 7h16" />
+        <path id="linea-media" d="M4 12h16" />
+        <path id="linea-inferior" d="M4 17h16" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- panel móvil -->
+  <div id="menu-movil" class="hidden border-t border-[#f5f0e614] px-6 pb-6 md:hidden">
+    <div class="flex flex-col gap-4 pt-5 font-body text-sm tracking-[0.06em] uppercase">
+      {enlaces.map((e) => (
+        <a href={e.href} class="text-tenue transition hover:text-dorado-suave">{e.texto}</a>
+      ))}
+      <a
+        href={WHATSAPP}
+        target="_blank"
+        rel="noopener"
+        class="mt-2 inline-block w-fit rounded-full bg-dorado px-6 py-2.5 font-body text-sm font-semibold text-noche-deep transition duration-150 active:scale-95"
+      >
+        Reserva tu noche
+      </a>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const btn = document.getElementById("btn-menu");
+  const menu = document.getElementById("menu-movil");
+  const lineaSuperior = document.getElementById("linea-superior");
+  const lineaMedia = document.getElementById("linea-media");
+  const lineaInferior = document.getElementById("linea-inferior");
+
+  const setMenu = (abierto: boolean) => {
+    menu?.classList.toggle("hidden", !abierto);
+    btn?.setAttribute("aria-expanded", String(abierto));
+    btn?.setAttribute("aria-label", abierto ? "Cerrar menú" : "Abrir menú");
+    lineaMedia?.classList.toggle("hidden", abierto);
+    lineaSuperior?.setAttribute("d", abierto ? "M5 5l14 14" : "M4 7h16");
+    lineaInferior?.setAttribute("d", abierto ? "M19 5 5 19" : "M4 17h16");
+  };
+
+  btn?.addEventListener("click", () => setMenu(menu?.classList.contains("hidden") ?? false));
+  menu?.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !menu?.classList.contains("hidden")) {
+      setMenu(false);
+      btn?.focus();
+    }
+  });
+</script>

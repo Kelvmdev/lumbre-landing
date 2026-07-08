@@ -1,0 +1,16 @@
+# LUMBRE — todo el sitio es público, adelante.
+User-agent: *
+Allow: /
+
+# Bots de IA: permitidos a propósito (queremos que nos citen — GEO).
+User-agent: GPTBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+
+# El mapa del sitio lo genera @astrojs/sitemap en el build.
+Sitemap: https://lumbre-landing.vercel.app/sitemap-index.xml

@@ -1,0 +1,23 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout titulo="Perdido en la noche · LUMBRE" noindex={true}>
+  <section
+    class="mx-auto flex min-h-[70svh] max-w-2xl flex-col items-center justify-center gap-6 px-6 text-center"
+  >
+    <p class="font-display text-6xl text-dorado sm:text-8xl">404</p>
+    <h1 class="font-display text-2xl text-hueso sm:text-3xl">
+      Esta estrella no está en el mapa
+    </h1>
+    <p class="max-w-md font-body text-tenue">
+      La página que buscas no existe o se apagó. Volvamos al camino de vuelta al domo.
+    </p>
+    <a
+      href="/"
+      class="rounded-full bg-dorado px-6 py-3 font-body font-medium text-noche transition hover:bg-dorado-suave"
+    >
+      Volver al inicio
+    </a>
+  </section>
+</Layout>

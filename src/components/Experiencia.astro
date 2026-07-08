@@ -1,0 +1,48 @@
+---
+// SVGs de línea, decorativos (aria-hidden): el texto ya explica el ícono.
+const features = [
+  {
+    titulo: "Domo geodésico",
+    desc: "Cama king frente a un ventanal curvo. Te duermes mirando el cielo, te despierta el amanecer.",
+    icono: `<path d="M12 3 3 20h18L12 3Z"/><path d="M8 20l4-7 4 7"/>`,
+  },
+  {
+    titulo: "Cena bajo las estrellas",
+    desc: "Mesa servida al aire libre, fogata incluida y el rumor del bosque de banda sonora.",
+    icono: `<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>`,
+  },
+  {
+    titulo: "Sendero al amanecer",
+    desc: "Ruta guiada entre niebla y árboles centenarios para recibir el primer sol del día.",
+    icono: `<path d="M3 18h18"/><path d="M6 18c0-6 3-9 6-9s6 3 6 9"/><path d="M12 9V4"/>`,
+  },
+];
+---
+
+<section id="exp" class="py-20 sm:py-28 lg:py-36">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <div class="reveal mb-10 sm:mb-14">
+      <p class="mb-2 text-xs tracking-[0.24em] text-dorado-suave uppercase">La experiencia</p>
+      <h2 class="font-display text-3xl font-normal sm:text-4xl lg:text-5xl">
+        Tres razones para quedarte
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+      {features.map((f) => (
+        <article class="reveal rounded-2xl border border-linea bg-[#2a2a4a47] p-8">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke-width="1.4"
+            class="mb-5 h-9 w-9 stroke-dorado"
+            aria-hidden="true"
+            set:html={f.icono}
+          />
+          <h3 class="mb-2 font-display text-2xl font-normal">{f.titulo}</h3>
+          <p class="text-sm text-tenue sm:text-base">{f.desc}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

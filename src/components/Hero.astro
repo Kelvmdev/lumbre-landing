@@ -1,0 +1,93 @@
+---
+import { WHATSAPP } from "../lib/enlaces";
+---
+
+<section class="relative flex min-h-[96vh] flex-col justify-center overflow-hidden">
+  <!-- glow radial detrás del domo (decorativo) -->
+  <div
+    aria-hidden="true"
+    class="glow pointer-events-none absolute bottom-[8%] left-1/2 -z-20 aspect-square w-[min(46rem,90vw)] -translate-x-1/2 rounded-full blur-[6px]"
+  ></div>
+
+  <!-- escena: bosque en 3 capas + domo geodésico (decorativa) -->
+  <div class="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[58%]" aria-hidden="true">
+    <svg viewBox="0 0 1440 500" preserveAspectRatio="xMidYMax slice" class="absolute bottom-0 h-full w-full">
+      <!-- bosque lejano -->
+      <path
+        class="capa"
+        data-speed="0.15"
+        d="M0 320 L90 250 L150 300 L230 210 L300 300 L380 240 L470 310 L560 230 L650 310 L740 250 L840 320 L940 250 L1030 310 L1130 240 L1230 310 L1320 250 L1440 320 L1440 500 L0 500 Z"
+        fill="#3a3a55"
+        opacity=".55"
+      />
+      <!-- bosque medio -->
+      <path
+        class="capa"
+        data-speed="0.3"
+        d="M0 380 L110 300 L190 360 L280 280 L370 370 L470 300 L570 370 L680 290 L780 370 L880 300 L980 370 L1090 290 L1190 370 L1300 300 L1440 380 L1440 500 L0 500 Z"
+        fill="#2a3340"
+        opacity=".8"
+      />
+      <!-- domo geodésico -->
+      <g id="domo-hero" transform="translate(720 402)">
+        <ellipse cx="0" cy="60" rx="180" ry="18" fill="#000" opacity=".3" />
+        <path d="M-140 60 A140 140 0 0 1 140 60 Z" fill="url(#domo-hero-grad)" />
+        <g stroke="#e8a54b" stroke-width="1" opacity=".5" fill="none">
+          <path d="M-140 60 A140 140 0 0 1 140 60" />
+          <path d="M-92 60 A92 92 0 0 1 92 60" />
+          <path d="M-140 60 L-46 -44 L46 -44 L140 60 M-46 -44 L0 -78 L46 -44 M-92 60 L0 -20 L92 60 M0 -78 L0 60" />
+        </g>
+        <rect x="-22" y="18" width="44" height="42" rx="6" fill="#f0c88a" opacity=".9" />
+      </g>
+      <!-- bosque cercano -->
+      <path
+        class="capa"
+        data-speed="0.5"
+        d="M0 440 L120 380 L220 430 L340 360 L450 435 L580 370 L700 435 L820 360 L950 435 L1080 370 L1210 435 L1340 370 L1440 440 L1440 500 L0 500 Z"
+        fill="#141c26"
+      />
+      <defs>
+        <radialGradient id="domo-hero-grad" cx="50%" cy="90%" r="90%">
+          <stop offset="0%" stop-color="#f0c88a" />
+          <stop offset="55%" stop-color="#c98a4a" />
+          <stop offset="100%" stop-color="#5a4370" />
+        </radialGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="mx-auto w-full max-w-6xl px-6">
+    <p class="mb-5 text-xs tracking-[0.28em] text-dorado-suave uppercase sm:text-sm">
+      Glamping en el bosque · Antioquia
+    </p>
+    <h1 class="text-[clamp(2.9rem,9vw,6.4rem)] leading-[1.02] tracking-[-0.01em] font-display font-normal text-hueso [text-shadow:0_2px_40px_rgba(0,0,0,.35)] [text-wrap:balance]">
+      Duerme bajo<br />las <em class="text-dorado-suave">estrellas</em>
+    </h1>
+    <p class="mt-6 max-w-[34ch] text-lg text-hueso opacity-90">
+      Un domo geodésico, el silencio del bosque y un cielo que se enciende cuando cae la noche. Sin señal, sin prisa.
+    </p>
+    <div class="mt-10 flex flex-wrap gap-4">
+      <a
+        href={WHATSAPP}
+        target="_blank"
+        rel="noopener"
+        class="rounded-full bg-dorado px-6 py-2.5 font-body text-sm font-semibold tracking-[0.02em] text-noche-deep shadow-[0_4px_18px_rgba(232,165,75,.35)] transition duration-150 hover:shadow-[0_6px_26px_rgba(232,165,75,.55)] active:scale-95"
+      >
+        Reserva tu noche
+      </a>
+      <a
+        href="#domos"
+        class="rounded-full border border-[#f5f0e659] px-6 py-2.5 font-body text-sm tracking-[0.02em] text-hueso transition duration-150 hover:border-dorado-suave hover:text-dorado-suave active:scale-95"
+      >
+        Ver los domos
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* radial-gradient con transparencia: Tailwind no cubre gradientes radiales arbitrarios de forma fiable */
+  .glow {
+    background: radial-gradient(circle, rgba(232, 165, 75, 0.35), transparent 62%);
+  }
+</style>

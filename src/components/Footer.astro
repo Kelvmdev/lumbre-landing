@@ -1,0 +1,76 @@
+---
+import { WHATSAPP, REDES } from "../lib/enlaces";
+const anio = new Date().getFullYear();
+
+const explorar = [
+  { href: "#exp", texto: "Experiencia" },
+  { href: "#domos", texto: "Domos" },
+  { href: "#galeria", texto: "Galería" },
+];
+
+const redes = [
+  { href: REDES.instagram, texto: "Instagram" },
+  { href: REDES.whatsapp, texto: "WhatsApp" },
+  { href: REDES.maps, texto: "Maps" },
+];
+---
+
+<footer id="contacto" class="border-t border-linea bg-noche-deep">
+  <div class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
+    <div class="reveal grid grid-cols-1 gap-10 md:grid-cols-[2fr_1fr_1fr_1.4fr]">
+      <!-- marca -->
+      <div>
+        <div class="flex items-center gap-2 font-display text-lg tracking-[0.14em] text-hueso">
+          <span aria-hidden="true" class="h-2 w-2 rounded-full bg-dorado shadow-[0_0_12px_var(--color-dorado)]"></span>
+          LUMBRE
+        </div>
+        <p class="mt-4 max-w-xs font-body text-sm leading-relaxed text-tenue">
+          Glamping de autor en el bosque. Desconecta de todo, conéctate con el cielo.
+        </p>
+      </div>
+
+      <!-- explorar -->
+      <div>
+        <h3 class="font-body text-xs tracking-[0.2em] text-dorado-suave uppercase">Explorar</h3>
+        <ul class="mt-4 space-y-2 font-body text-sm">
+          {explorar.map((e) => (
+            <li><a href={e.href} class="text-tenue transition hover:text-hueso">{e.texto}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- contacto -->
+      <div>
+        <h3 class="font-body text-xs tracking-[0.2em] text-dorado-suave uppercase">Contacto</h3>
+        <ul class="mt-4 space-y-2 font-body text-sm">
+          <li><a href="tel:+573000000000" class="text-tenue transition hover:text-hueso">+57 300 000 0000</a></li>
+          <li><a href="mailto:hola@lumbre.co" class="text-tenue transition hover:text-hueso">hola@lumbre.co</a></li>
+          <li><span class="text-tenue">Vereda El Bosque, Antioquia</span></li>
+        </ul>
+      </div>
+
+      <!-- reserva -->
+      <div>
+        <h3 class="font-body text-xs tracking-[0.2em] text-dorado-suave uppercase">Reserva</h3>
+        <p class="mt-4 font-body text-sm text-tenue">Cada noche empieza al atardecer.</p>
+        <a
+          href={WHATSAPP}
+          target="_blank"
+          rel="noopener"
+          class="mt-4 inline-block rounded-full bg-dorado px-6 py-2.5 font-body text-sm font-semibold text-noche-deep transition duration-150 active:scale-95"
+        >
+          Reserva tu noche
+        </a>
+      </div>
+    </div>
+
+    <div class="reveal mt-14 flex flex-col items-center justify-between gap-3 border-t border-linea pt-6 font-body text-xs text-tenue sm:flex-row">
+      <p>© {anio} LUMBRE Glamping. Concepto de portafolio.</p>
+      <div class="flex gap-4">
+        {redes.map((r) => (
+          <a href={r.href} target="_blank" rel="noopener" class="transition hover:text-hueso">{r.texto}</a>
+        ))}
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,68 @@
+---
+// Un solo array alimenta DOS salidas: el acordeón visible y el schema FAQPage
+// (GEO). Respuestas en texto plano para que sirvan igual en ambos.
+const faqs = [
+  {
+    q: "¿Cuánto cuesta una noche?",
+    a: "La tarifa varía según la fecha y la temporada. Escríbenos por WhatsApp y te confirmamos el precio vigente y la disponibilidad al instante.",
+  },
+  {
+    q: "¿Cuál es la estancia mínima?",
+    a: "La estancia mínima es de dos noches, ideal para desconectar sin prisa. En fechas puntuales puede variar; confírmalo al reservar.",
+  },
+  {
+    q: "¿Aceptan mascotas?",
+    a: "Sí, recibimos una mascota por reserva avisando con antelación, para cuidar el entorno y a los demás huéspedes.",
+  },
+  {
+    q: "¿A qué hora es el check-in y el check-out?",
+    a: "Check-in desde las 3:00 p. m. y check-out hasta las 12:00 del mediodía. Si necesitas otro horario, escríbenos y vemos cómo acomodarlo.",
+  },
+  {
+    q: "¿Hay señal o wifi en el domo?",
+    a: "Hay cobertura móvil suficiente para lo esencial. No prometemos wifi rápido a propósito: la idea de LUMBRE es desconectar y mirar el cielo.",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+---
+
+<section id="faq" class="py-20 sm:py-28 lg:py-36">
+  <div class="mx-auto max-w-3xl px-5 sm:px-8">
+    <div class="reveal mb-10 sm:mb-14">
+      <p class="mb-2 text-xs tracking-[0.24em] text-dorado-suave uppercase">Antes de reservar</p>
+      <h2 class="font-display text-3xl font-normal sm:text-4xl lg:text-5xl">
+        Preguntas frecuentes
+      </h2>
+    </div>
+
+    <div class="reveal flex flex-col gap-3">
+      {faqs.map((f) => (
+        <details class="group rounded-2xl border border-linea bg-[#2a2a4a47] px-6 py-1">
+          <summary
+            class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 font-display text-lg text-hueso marker:hidden sm:text-xl"
+          >
+            {f.q}
+            <span
+              aria-hidden="true"
+              class="shrink-0 text-dorado transition-transform duration-200 group-open:rotate-45"
+            >
+              +
+            </span>
+          </summary>
+          <p class="pb-5 font-body text-sm text-tenue sm:text-base">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</section>

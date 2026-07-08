@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+/* Sitio deliberadamente oscuro: scrollbars/controles usan variante oscura. */
+:root { color-scheme: dark; }
+
+/* ── Tokens: un solo lugar para colores y fuentes ──
+   Concepto "Del atardecer a las estrellas". El dorado es el ÚNICO acento
+   (CTA, luz del domo, estrellas). Cambiar un tono = una línea aquí. */
+@theme {
+  --color-noche: #0f1729;
+  --color-noche-deep: #0a0f1c;
+  --color-crepusculo: #2a2a4a;
+  --color-linea: #3a3a55;
+  --color-dorado: #e8a54b;
+  --color-dorado-suave: #f0c88a;
+  --color-musgo: #4a5d4f;
+  --color-hueso: #f5f0e6;
+  --color-tenue: #bdb3a4; /* subido de #a89f8f: pasa contraste AA también sobre las bandas más claras del degradado */
+
+  --font-display: "Fraunces Variable", Georgia, serif;
+  --font-body: "Inter Variable", system-ui, sans-serif;
+}
+
+/* ── Base: el cielo se apaga contigo ──
+   El fondo baja de brasa de atardecer → púrpura → noche a lo largo de TODA la
+   página. Es la FIRMA, y funciona sin JS (GSAP solo la suaviza con Lenis).
+   Nota: el atardecer va deliberadamente PROFUNDO (brasa, no oro brillante)
+   para que el texto claro del hero/nav pase contraste AA sobre él. */
+body {
+  background: linear-gradient(180deg,
+    #7d4029 0%, #63384e 10%, #423860 20%, var(--color-crepusculo) 30%,
+    var(--color-noche) 62%, var(--color-noche-deep) 100%);
+  color: var(--color-hueso);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: clip; /* red de seguridad: nada de scroll horizontal */
+}
+
+/* El nav es sticky: al saltar a #exp/#domos/#galeria el título no debe quedar
+   tapado por él. */
+html { scroll-padding-top: 5rem; }
+
+/* En pantallas muy grandes subimos el rem base para que no se vea diminuto. */
+@media (min-width: 2560px) { :root { font-size: 18px; } }
+@media (min-width: 3840px) { :root { font-size: 22px; } }
+
+/* ── Revelado al hacer scroll (lo maneja GSAP; esto es el estado base) ──
+   Visible por defecto: si el JS no corre, el contenido se ve igual. */
+.reveal { opacity: 1; }
+
+/* ── Foco de teclado visible en TODO interactivo (accesibilidad) ── */
+:where(a, button, summary, input, select, textarea, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid var(--color-dorado-suave);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Respeto a quien apaga animaciones ──
+   GSAP también lo comprueba en JS; esto cubre las animaciones CSS puras. */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition-duration: 0.01ms !important; /* hovers y active:scale quedan instantáneos */
+    scroll-behavior: auto !important;
+  }
+}
