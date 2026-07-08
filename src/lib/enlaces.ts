@@ -15,11 +15,13 @@ export const waReserva = (domo: string) =>
 
 export const EMAIL = "hola@lumbre.co";
 export const UBICACION = "Jardín, Antioquia";
+// Coords del pin (Jardín, Antioquia — demo). Fuente única: mapa + JSON-LD las leen.
+export const COORDS = { lat: 5.5983, lon: -75.8186 };
 
 export const REDES = {
   instagram: "https://instagram.com/lumbre.glamping",
   whatsapp: `https://wa.me/${TELEFONO}`,
-  maps: `https://maps.google.com/?q=${encodeURIComponent(`${UBICACION}, Colombia`)}`,
+  maps: `https://www.google.com/maps/search/?api=1&query=${COORDS.lat},${COORDS.lon}`,
 };
 
 // Navegación del sitio, en UN solo lugar. El footer filtra lo que no muestra.

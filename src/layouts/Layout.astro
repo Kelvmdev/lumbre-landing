@@ -9,7 +9,7 @@ import frauncesWoff2 from "@fontsource-variable/fraunces/files/fraunces-latin-wg
 import "../styles/global.css";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
-import { TELEFONO_E164 } from "../lib/enlaces";
+import { TELEFONO_E164, COORDS } from "../lib/enlaces";
 
 interface Props {
   titulo?: string;
@@ -43,8 +43,8 @@ const lodging = {
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 5.5983,
-    longitude: -75.8186,
+    latitude: COORDS.lat,
+    longitude: COORDS.lon,
   },
   amenityFeature: [
     { "@type": "LocationFeatureSpecification", name: "Domo geodésico", value: true },

@@ -1,0 +1,103 @@
+---
+import { COORDS, UBICACION, REDES } from "../lib/enlaces";
+
+const zoom = 14;
+const mapSrc = `https://maps.google.com/maps?q=${COORDS.lat},${COORDS.lon}&z=${zoom}&hl=es&output=embed`;
+---
+
+<section id="mapa" data-mapa class="py-20 sm:py-28 lg:py-36">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <div class="reveal grid grid-cols-1 gap-8 md:grid-cols-[1fr_1.35fr] md:items-center md:gap-12">
+      <!-- info -->
+      <div>
+        <p class="mb-2 text-xs tracking-[0.24em] text-dorado-suave uppercase">Cómo llegar</p>
+        <h2 class="font-display text-3xl font-normal sm:text-4xl lg:text-5xl">
+          Nos escondemos<br />en el bosque
+        </h2>
+        <p class="mt-4 max-w-md text-tenue">
+          A 20 minutos de {UBICACION}, por un camino de montaña entre niebla y árboles.
+          Te enviamos la ruta exacta al confirmar tu reserva.
+        </p>
+        <a
+          href={REDES.maps}
+          target="_blank"
+          rel="noopener"
+          class="mt-6 inline-flex items-center gap-2 rounded-full border border-[#f5f0e659] px-6 py-2.5 font-body text-sm text-hueso transition duration-150 hover:border-dorado-suave hover:text-dorado-suave active:scale-95"
+        >
+          Abrir en Google Maps →
+        </a>
+      </div>
+
+      <!-- mapa enmarcado (iframe con filtro oscuro + overlay anti-hijack) -->
+      <div class="relative aspect-[4/3] overflow-hidden rounded-2xl border border-linea md:aspect-[16/10]">
+        <iframe
+          src={mapSrc}
+          title="Mapa · LUMBRE Glamping"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="absolute inset-0 h-full w-full border-0 [filter:invert(0.92)_hue-rotate(180deg)]"
+        ></iframe>
+        <!-- Overlay anti-hijack: no captura la rueda hasta doble clic -->
+        <div
+          data-mapa-overlay
+          aria-hidden="true"
+          class="absolute inset-0 flex cursor-pointer items-center justify-center bg-transparent"
+        >
+          <span
+            data-mapa-hint
+            hidden
+            class="pointer-events-none rounded-full bg-[#000000d9] px-4 py-2 text-sm text-white shadow-lg"
+          >
+            Doble clic para interactuar con el mapa
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const section = document.querySelector<HTMLElement>("[data-mapa]");
+  const overlay = section?.querySelector<HTMLElement>("[data-mapa-overlay]") ?? null;
+  const hint = overlay?.querySelector<HTMLElement>("[data-mapa-hint]") ?? null;
+  if (section && overlay) {
+    let tapCount = 0;
+    let tapTimer: number | undefined;
+    const lock = () => {
+      overlay.style.pointerEvents = "";
+      tapCount = 0;
+      if (hint) hint.hidden = true;
+      if (tapTimer !== undefined) {
+        window.clearTimeout(tapTimer);
+        tapTimer = undefined;
+      }
+    };
+    const unlock = () => {
+      overlay.style.pointerEvents = "none";
+      tapCount = 0;
+      if (hint) hint.hidden = true;
+    };
+    overlay.addEventListener("click", () => {
+      tapCount++;
+      if (tapCount === 1) {
+        if (hint) hint.hidden = false;
+        if (tapTimer !== undefined) window.clearTimeout(tapTimer);
+        tapTimer = window.setTimeout(() => {
+          tapCount = 0;
+          if (hint) hint.hidden = true;
+          tapTimer = undefined;
+        }, 1800);
+      } else {
+        unlock();
+      }
+    });
+    section.addEventListener("wheel", () => { if (overlay.style.pointerEvents === "none") lock(); }, { passive: true });
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries) => entries.forEach((e) => { if (e.intersectionRatio < 0.2) lock(); }),
+        { threshold: [0, 0.2] }
+      );
+      io.observe(section);
+    }
+  }
+</script>
