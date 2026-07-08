@@ -1,6 +1,6 @@
 # LUMBRE — landing cinematográfica: glamping bajo las estrellas
 
-`estado: 🟡 construida — falta pase SEO/assets antes de publicar` · `en vivo: — (aún no desplegada)`
+`estado: 🟡 publicada, pero con BACKLOG de auditoría (1 bug crítico: la firma no corre)` · `en vivo: https://lumbre-landing.vercel.app`
 
 **Stack:** Astro 5 · Tailwind v4 (@tailwindcss/vite) · GSAP + Lenis · Fontsource (Fraunces/Inter) · 100% estático (sin adapter)
 **Dev:** `npm run dev` · **Preview build:** `npm run build && npm run preview` · **Repo:** — (sin git aún)
@@ -27,10 +27,40 @@
 - ✅ **Datos demo coherentes** (glamping ficticio en **Jardín, Antioquia**): teléfono/WhatsApp/Instagram/Maps en `enlaces.ts`, coords `geo` reales de Jardín, FAQ sin TODOs. ES UN DEMO — datos inventados a propósito.
 - Build limpio (2 páginas), todo copiado a `dist`. `site` en astro.config = placeholder vercel.
 
-## Pendiente (siguiente = publicar)
-1. **Deploy Vercel** (estático) e **inicializar git**.
-2. Al tener dominio final: cambiarlo en `astro.config.mjs` Y `public/robots.txt`.
-3. Medir **PageSpeed sobre la URL en vivo** (skill seo-pagespeed) y ajustar.
+## Git/GitHub — hecho (2026-07-07)
+- ✅ **git init** + primer commit. **Repo público:** https://github.com/Kelvmdev/lumbre-landing (cuenta Kelvmdev).
+- `.gitignore` estándar Astro (excluye node_modules/dist/.astro/.env).
+- Gotcha red: push fallaba con `curl 55/408` (HTTP/2) → fix `git config http.version HTTP/1.1`.
+
+## Deploy + auditoría — hecho (2026-07-07)
+- ✅ **Desplegada en Vercel**: https://lumbre-landing.vercel.app (home/og/robots 200, 404 real). El dominio coincidió con el placeholder → nada que cambiar en config/robots.
+- ✅ **Auditoría SEO/rendimiento/a11y sobre HTML en vivo**: todo verde estructuralmente — title/desc/lang/canonical/robots OK, 1 h1, JSON-LD (LodgingBusiness+geo/tel y FAQPage), og:image absoluto, preload fuente H1 (LCP), 5 imgs con alt+width+lazy+srcset (CLS~0), CDN cache HIT.
+- ⏳ **Número exacto PageSpeed**: API pública con cuota diaria agotada. Correr manual en pagespeed.web.dev (móvil, 2 veces) para el score; estructura ya está en verde.
+
+## 🔎 BACKLOG de auditoría vs manual (2026-07-08) → ATACAR PRÓXIMA SESIÓN
+Auditoría doble (yo + agente revisor-final) contra manual 01/03/04/05/10. Orden sugerido: bloque 🟢 primero (1 commit temático), luego decidir 🟡, y 🔴 solo si se quiere.
+
+### 🟢 FÁCIL (minutos) — arrancar por aquí, 1 sola tanda/commit
+1. **[CRÍTICO] Revivir la FIRMA** — `src/scripts/cine.ts` busca `#contenido header`, `.eyebrow`, `.lede`, `.hero-cta` que NO existen (el Hero es `<section>`, sin esas clases). Resultado: la **entrada escalonada del hero** (líneas 77-84) y el **parallax del bosque `.capa` + `#domo-hero`** (líneas 88-105, gated por `if(header)`=null) **NUNCA corren en prod**. Lo que sí corre: reveals, estrellas canvas, degradado, Lenis. FIX fácil: en `cine.ts` cambiar los selectores a algo que exista (p.ej. envolver el hero en `<header>` o usar `#contenido section:first-of-type`) + añadir clases `.eyebrow/.lede/.hero-cta` a eyebrow/H1/párrafo/CTAs del Hero. Verificar el parallax en vivo tras el fix.
+2. **Coherencia de datos demo** — Footer (`components/Footer.astro:46-48`) tiene tel `+573000000000` y "Vereda El Bosque"; el WhatsApp real es `573145678901` (enlaces.ts) y el JSON-LD dice "Jardín, Antioquia". Unificar a UN teléfono/ubicación en todo el sitio.
+3. **Crédito "Sitio por Kervin"** enlazado al portafolio en el footer (manual-10: anzuelo de leads gratis en cada demo). Falta.
+4. **404** (`pages/404.astro:16`) — botón sin `active:scale-95` (inconsistente con Nav/Hero/Footer/CTA).
+5. **DRY** — array de enlaces del nav duplicado en `Nav.astro:3-8` y `Footer.astro:5-9`; el footer hardcodea tel/email en vez de leerlos de `enlaces.ts`. Centralizar.
+6. **Logo Nav** (`Nav.astro:13`) `href="#"` → `href="/"`.
+
+### 🟡 MEDIA (una sesión c/u)
+7. **Sección "Domos" vacía** — el ancla `#domos` (Nav/Footer) cae en `CTA.astro` (CTA genérico), no en info de domos. No hay tipos/capacidad/precio/fotos. Renombrar la sección o darle contenido real (agente maquetador o cms-datos).
+8. **Formulario de reserva** (fecha + nº personas → arma mensaje WhatsApp con prefill, patrón checkout-WhatsApp tema 09; o HubSpot tema 03 + `/gracias`). Hoy los 4 CTAs son el mismo `wa.me` con texto fijo. En desktop WhatsApp es fricción → un form o `mailto:` visible ayuda.
+9. **Ubicación/mapa** (tema 02) — iframe Google anti-hijack; glamping se beneficia de "cómo llegar".
+10. **[verificar] Responsive 320px** — a 320px los 2 titulares grandes (Hero `Hero.astro:63` clamp 9vw + CieloTexto `CieloTexto.astro:6` clamp 13vw, `leading` muy ajustado) podrían apretarse/envolver feo. Confirmar en DevTools real (no rompe scroll: hay `overflow-x:clip`).
+11. **PageSpeed en vivo (número)** — pendiente: API pública con cuota agotada el 7 jul. Correr manual en pagespeed.web.dev (móvil, 2 veces) o reintentar API.
+12. **Legales** (privacidad/términos) o quitar del footer — opcional en demo.
+
+### 🔴 DIFÍCIL (cambio de arquitectura, varias sesiones)
+13. **CMS propio** (tema 04) — HOY ES 100% ESTÁTICA (sin adapter/SSR). Montar CMS = añadir `@astrojs/vercel`+`prerender=false`, mover TODO el contenido a `data.json` (hero/textos/FAQ/galería/contacto), panel `/admin` login cookie HMAC (tema 09), proxy `/api/guardar` GitHub Contents API, 5 env vars en Vercel, blindaje del guardado. **Recomendación: para un DEMO no hace falta (YAGNI); montarlo solo si se quiere como pieza de portafolio que demuestre la capacidad de CMS.**
+
+### ✅ Confirmado EN VERDE por la auditoría (NO tocar)
+Contraste AA (ratios ~5:1–9:1), foco visible global (`:focus-visible`), reduced-motion (CSS+JS), skip-link, `<main>` landmark, aria de hamburguesa (expanded/controls/Escape+focus), FAQ `<details>` accesible por teclado, sin lorem/TODO en `src/`, anclas del nav (#exp/#galeria/#contacto/#domos/#faq) todas con `id` real. SEO/OG/JSON-LD/robots/sitemap/404/og.png/deploy ya verificados antes.
 
 ## Opcional / a decidir
 - Foto destacada de galería (domo montaña, Pexels 33415953) es vertical y va recortada en la tarjeta ancha; alternativa: ponerla en tarjeta alta.
@@ -41,4 +71,4 @@
 - El degradado tarde→noche lo hace el CSS (`body`), GSAP solo lo suaviza con Lenis; funciona sin JS.
 - Preview reusa puerto: si 4321/2/3 ocupados, sube a 4324+.
 
-<sub>actualizado 2026-07-07 · construida hoy con agentes maquetador (paralelo) + revisor-final · sin git aún</sub>
+<sub>actualizado 2026-07-08 · publicada + SEO/deploy hechos; auditoría doble dejó §BACKLOG (bug crítico: la firma no corre). PRÓXIMA SESIÓN = bloque 🟢.</sub>
