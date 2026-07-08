@@ -8,6 +8,11 @@ export const WHATSAPP =
   `https://wa.me/${TELEFONO}?text=` +
   encodeURIComponent("Hola, quiero reservar una noche en LUMBRE 🌙");
 
+// WhatsApp con mensaje prellenado por domo (reserva contextual).
+export const waReserva = (domo: string) =>
+  `https://wa.me/${TELEFONO}?text=` +
+  encodeURIComponent(`Hola, quiero reservar el ${domo} en LUMBRE 🌙`);
+
 export const EMAIL = "hola@lumbre.co";
 export const UBICACION = "Jardín, Antioquia";
 

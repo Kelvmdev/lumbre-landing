@@ -1,6 +1,6 @@
 # LUMBRE — landing cinematográfica: glamping bajo las estrellas
 
-`estado: 🟡 publicada, pero con BACKLOG de auditoría (1 bug crítico: la firma no corre)` · `en vivo: https://lumbre-landing.vercel.app`
+`estado: 🟢 publicada, firma REVIVIDA en prod + bloque fácil de auditoría cerrado; queda backlog 🟡/🔴` · `en vivo: https://lumbre-landing.vercel.app`
 
 **Stack:** Astro 5 · Tailwind v4 (@tailwindcss/vite) · GSAP + Lenis · Fontsource (Fraunces/Inter) · 100% estático (sin adapter)
 **Dev:** `npm run dev` · **Preview build:** `npm run build && npm run preview` · **Repo:** — (sin git aún)
@@ -40,13 +40,13 @@
 ## 🔎 BACKLOG de auditoría vs manual (2026-07-08) → ATACAR PRÓXIMA SESIÓN
 Auditoría doble (yo + agente revisor-final) contra manual 01/03/04/05/10. Orden sugerido: bloque 🟢 primero (1 commit temático), luego decidir 🟡, y 🔴 solo si se quiere.
 
-### 🟢 FÁCIL (minutos) — arrancar por aquí, 1 sola tanda/commit
-1. **[CRÍTICO] Revivir la FIRMA** — `src/scripts/cine.ts` busca `#contenido header`, `.eyebrow`, `.lede`, `.hero-cta` que NO existen (el Hero es `<section>`, sin esas clases). Resultado: la **entrada escalonada del hero** (líneas 77-84) y el **parallax del bosque `.capa` + `#domo-hero`** (líneas 88-105, gated por `if(header)`=null) **NUNCA corren en prod**. Lo que sí corre: reveals, estrellas canvas, degradado, Lenis. FIX fácil: en `cine.ts` cambiar los selectores a algo que exista (p.ej. envolver el hero en `<header>` o usar `#contenido section:first-of-type`) + añadir clases `.eyebrow/.lede/.hero-cta` a eyebrow/H1/párrafo/CTAs del Hero. Verificar el parallax en vivo tras el fix.
-2. **Coherencia de datos demo** — Footer (`components/Footer.astro:46-48`) tiene tel `+573000000000` y "Vereda El Bosque"; el WhatsApp real es `573145678901` (enlaces.ts) y el JSON-LD dice "Jardín, Antioquia". Unificar a UN teléfono/ubicación en todo el sitio.
-3. **Crédito "Sitio por Kervin"** enlazado al portafolio en el footer (manual-10: anzuelo de leads gratis en cada demo). Falta.
-4. **404** (`pages/404.astro:16`) — botón sin `active:scale-95` (inconsistente con Nav/Hero/Footer/CTA).
-5. **DRY** — array de enlaces del nav duplicado en `Nav.astro:3-8` y `Footer.astro:5-9`; el footer hardcodea tel/email en vez de leerlos de `enlaces.ts`. Centralizar.
-6. **Logo Nav** (`Nav.astro:13`) `href="#"` → `href="/"`.
+### ✅ 🟢 FÁCIL — HECHO (2026-07-08, commit `00e288d`, desplegado + verificado en prod)
+1. ✅ **[CRÍTICO] FIRMA revivida** — Hero ahora es `<section id="inicio">` con clases `.eyebrow/.lede/.hero-cta`; `cine.ts` apunta a `#inicio`. Parallax bosque/domo + entrada escalonada vuelven a correr. Verificado: prod ya sirve `#inicio ...` y sin `#contenido header`.
+2. ✅ **Datos demo** — Footer lee `TELEFONO_E164` de enlaces.ts; ubicación unificada a "Jardín, Antioquia".
+3. ✅ **Crédito "Sitio por Kervin Martínez"** → portafolio, en la barra inferior del footer.
+4. ✅ **404** — botón con `active:scale-95` + `duration-150`.
+5. ✅ **DRY** — `NAV`/`EMAIL`/`UBICACION` centralizados en enlaces.ts; Nav importa `NAV`, Footer lo filtra (sin "Contacto") y lee email/ubicación/tel de las constantes.
+6. ✅ **Logo Nav** `href="/"`.
 
 ### 🟡 MEDIA (una sesión c/u)
 7. **Sección "Domos" vacía** — el ancla `#domos` (Nav/Footer) cae en `CTA.astro` (CTA genérico), no en info de domos. No hay tipos/capacidad/precio/fotos. Renombrar la sección o darle contenido real (agente maquetador o cms-datos).
@@ -71,4 +71,4 @@ Contraste AA (ratios ~5:1–9:1), foco visible global (`:focus-visible`), reduce
 - El degradado tarde→noche lo hace el CSS (`body`), GSAP solo lo suaviza con Lenis; funciona sin JS.
 - Preview reusa puerto: si 4321/2/3 ocupados, sube a 4324+.
 
-<sub>actualizado 2026-07-08 · publicada + SEO/deploy hechos; auditoría doble dejó §BACKLOG (bug crítico: la firma no corre). PRÓXIMA SESIÓN = bloque 🟢.</sub>
+<sub>actualizado 2026-07-08 · bloque 🟢 completo + desplegado (commit 00e288d): firma revivida en prod, datos coherentes, crédito, DRY. PRÓXIMA SESIÓN = bloque 🟡 (empezar por #7 sección "Domos" o #10 responsive 320px).</sub>
