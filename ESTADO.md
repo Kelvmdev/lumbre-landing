@@ -1,6 +1,6 @@
 # LUMBRE — landing cinematográfica: glamping bajo las estrellas
 
-`estado: 🟢 publicada, firma REVIVIDA en prod + bloque fácil de auditoría cerrado; queda backlog 🟡/🔴` · `en vivo: https://lumbre-landing.vercel.app`
+`estado: 🟢 publicada, backlog 🟢 y 🟡 COMPLETOS (firma viva, Domos/Mapa/Reserva, PageSpeed 97/100/100/100); solo queda 🔴 #13 CMS = YAGNI` · `en vivo: https://lumbre-landing.vercel.app`
 
 **Stack:** Astro 5 · Tailwind v4 (@tailwindcss/vite) · GSAP + Lenis · Fontsource (Fraunces/Inter) · 100% estático (sin adapter)
 **Dev:** `npm run dev` · **Preview build:** `npm run build && npm run preview` · **Repo:** — (sin git aún)
@@ -50,11 +50,11 @@ Auditoría doble (yo + agente revisor-final) contra manual 01/03/04/05/10. Orden
 
 ### 🟡 MEDIA (una sesión c/u)
 7. ✅ **HECHO (8 jul, commit `fd12f2b`, desplegado)** — `Domos.astro`: 3 domos (Estrella/Luna/Fuego) con foto, capacidad, precio COP (demo) y features; cada "Reservar" abre WhatsApp con el domo prellenado (helper `waReserva` en enlaces.ts). `#domos` movido de CTA a la sección real. FALTA: que Kervin valide nombres/precios demo en vivo.
-8. ✅ **HECHO (8 jul, commit `5caef24`, desplegado)** — `Reserva.astro` (id="reservar"): form nativo (date + number + select domo) → arma mensaje WhatsApp con fecha/personas/domo (helper `waReservaDetalle`). Patrón checkout-WhatsApp tema 09 (encodeURIComponent, window.open dentro del clic, valida fecha no pasada + personas≥1). Va entre Faq y CTA. Lógica verificada con check node. NOTA: los CTAs del Nav/Hero/Footer aún apuntan al `wa.me` genérico — se podrían repuntar a `#reservar` (mejora opcional, no crítica).
+8. ✅ **HECHO (8 jul, commit `5caef24`, desplegado)** — `Reserva.astro` (id="reservar"): form nativo (date + number + select domo) → arma mensaje WhatsApp con fecha/personas/domo (helper `waReservaDetalle`). Patrón checkout-WhatsApp tema 09 (encodeURIComponent, window.open dentro del clic, valida fecha no pasada + personas≥1). Va entre Faq y CTA. Lógica verificada con check node. ✅ **CTAs repuntados (commit `4f260e6`)**: Nav(x2)/Hero/Footer "Reserva tu noche" → `#reservar` (scroll al form); CTA final y botones por-domo siguen directos a WhatsApp.
 9. ✅ **HECHO (8 jul, commit `edd652e`, desplegado)** — `Mapa.astro`: sección "Cómo llegar" 2 columnas (info + iframe Google embed enmarcado, tema noche con filtro oscuro + overlay anti-hijack, patrón manual-02). Coords centralizadas en `enlaces.ts` (`COORDS` Jardín demo); Layout JSON-LD y `REDES.maps` las leen (fin del hardcode duplicado). Va entre Domos y Faq.
 10. ✅ **VERIFICADO OK (8 jul)** — Kervin confirmó en DevTools a 320px: los 2 titulares grandes NO sobresalen ni envuelven feo. Los espacios permiten wrap y `overflow-x:clip` evita scroll. Sin cambios (YAGNI).
-11. **PageSpeed en vivo (número)** — pendiente: API pública con cuota agotada el 7 jul. Correr manual en pagespeed.web.dev (móvil, 2 veces) o reintentar API.
-12. **Legales** (privacidad/términos) o quitar del footer — opcional en demo.
+11. ✅ **HECHO (8 jul) — PageSpeed móvil medido en pagespeed.web.dev: Rendimiento 97 · Accesibilidad 100 · Best Practices 100 · SEO 100.** Los 3 puntos de perf ≈ foto destacada galería ~600KB (lazy, no-LCP); exprimir a 100 = pulir por pulir, YAGNI. ("2/3 Navegación con agentes" = métrica experimental Google, no afecta score).
+12. ✅ **CERRADO como N/A (8 jul)** — no existe ningún enlace legal en el sitio (grep sin resultados), así que no hay links muertos que quitar. Para un DEMO no hacen falta legales (YAGNI). Solo montar `/privacidad` + `/terminos` (noindex) si pasa a cliente real que recoja datos.
 
 ### 🔴 DIFÍCIL (cambio de arquitectura, varias sesiones)
 13. **CMS propio** (tema 04) — HOY ES 100% ESTÁTICA (sin adapter/SSR). Montar CMS = añadir `@astrojs/vercel`+`prerender=false`, mover TODO el contenido a `data.json` (hero/textos/FAQ/galería/contacto), panel `/admin` login cookie HMAC (tema 09), proxy `/api/guardar` GitHub Contents API, 5 env vars en Vercel, blindaje del guardado. **Recomendación: para un DEMO no hace falta (YAGNI); montarlo solo si se quiere como pieza de portafolio que demuestre la capacidad de CMS.**
@@ -70,5 +70,7 @@ Contraste AA (ratios ~5:1–9:1), foco visible global (`:focus-visible`), reduce
 - Tailwind v4: NO usar `bg-x/opacidad` (genera `color-mix`, trampa manual-01) → usar hex de 8 dígitos o `rgba()` en `<style>`.
 - El degradado tarde→noche lo hace el CSS (`body`), GSAP solo lo suaviza con Lenis; funciona sin JS.
 - Preview reusa puerto: si 4321/2/3 ocupados, sube a 4324+.
+- **Push fallaba con "Out of memory, malloc 500MB":** `http.postBuffer` local estaba en `524288000` (500MiB, fix viejo). Con RAM justa git no lo reserva → bajado a `10485760` (10MiB). Si vuelve a fallar el push por OOM, revisar `git config --get http.postBuffer`.
+- **Build hace OOM intermitente (zlib/esbuild "insufficient memory"):** máquina con poca RAM libre; reintentar 1-2 veces suele bastar. Ayuda cerrar previews huérfanos (`taskkill` por puerto 432x) y pestañas Chrome.
 
-<sub>actualizado 2026-07-08 · bloque 🟢 completo (00e288d) + 🟡 #7 Domos (fd12f2b) + #9 Mapa (edd652e) + #8 Reserva (5caef24) desplegados; #10 verificado OK. QUEDA del 🟡: #11 PageSpeed (número), #12 legales (opcional). Bloque 🔴 #13 CMS = YAGNI para demo.</sub>
+<sub>actualizado 2026-07-08 · bloque 🟢 completo (00e288d) + 🟡 #7 Domos (fd12f2b) + #9 Mapa (edd652e) + #8 Reserva + CTAs (5caef24/4f260e6) desplegados; #10 verificado OK; #11 PageSpeed móvil 97/100/100/100; #12 legales N/A demo. BLOQUES 🟢 y 🟡 COMPLETOS. Solo queda 🔴 #13 CMS = YAGNI para demo (montar solo si se quiere como pieza de portafolio de CMS).</sub>
