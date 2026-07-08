@@ -20,6 +20,12 @@ export const IMAGENES: Record<string, ImageMetadata> = {
   "sendero-bosque": senderoBosque,
 };
 
+// El campo `img` puede ser una clave local (arriba) o una URL de Cloudinary
+// (fotos subidas desde el CMS). Estos helpers deciden cómo renderizarla.
+export const esRemota = (img: string) => img.startsWith("http");
+// Cloudinary optimiza por URL: f_auto (mejor formato) + q_auto (calidad).
+export const optimizar = (url: string) => url.replace("/upload/", "/upload/f_auto,q_auto/");
+
 export interface Hero {
   eyebrow: string;
   titulo: string;

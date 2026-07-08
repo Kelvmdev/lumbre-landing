@@ -53,7 +53,7 @@
     },
     {
       "nombre": "Domo Luna",
-      "img": "interior-domo",
+      "img": "https://res.cloudinary.com/dm43alaeg/image/upload/v1783550827/fivyds9z0hbbi4ktrdkj.png",
       "alt": "Interior acogedor de un domo con cama, luces cálidas y estufa encendida.",
       "capacidad": "2 personas",
       "precio": "520.000",

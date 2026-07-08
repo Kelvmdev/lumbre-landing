@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { waReserva } from "../lib/enlaces";
-import { contenido, IMAGENES } from "../lib/contenido";
+import { contenido, IMAGENES, esRemota, optimizar } from "../lib/contenido";
 
 const domos = contenido.domos;
 ---
@@ -22,14 +22,23 @@ const domos = contenido.domos;
       {domos.map((d) => (
         <article class="reveal group flex flex-col overflow-hidden rounded-2xl border border-linea bg-[#2a2a4a47]">
           <div class="relative aspect-[4/3] overflow-hidden">
-            <Image
-              src={IMAGENES[d.img]}
-              alt={d.alt}
-              widths={[400, 800, 1200]}
-              sizes="(min-width:768px) 33vw, 100vw"
-              loading="lazy"
-              class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
-            />
+            {esRemota(d.img) ? (
+              <img
+                src={optimizar(d.img)}
+                alt={d.alt}
+                loading="lazy"
+                class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+              />
+            ) : (
+              <Image
+                src={IMAGENES[d.img]}
+                alt={d.alt}
+                widths={[400, 800, 1200]}
+                sizes="(min-width:768px) 33vw, 100vw"
+                loading="lazy"
+                class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+              />
+            )}
           </div>
 
           <div class="flex flex-1 flex-col p-6 sm:p-7">

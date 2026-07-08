@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import { contenido, IMAGENES } from "../lib/contenido";
+import { contenido, IMAGENES, esRemota, optimizar } from "../lib/contenido";
 
 // `big` = tarjeta destacada (2 columnas). El alt es descriptivo real
 // (accesibilidad), el título es la etiqueta visible.
@@ -24,14 +24,23 @@ const fotos = contenido.galeria;
             foto.big ? "col-span-2 aspect-[3/2] md:aspect-auto" : "aspect-[3/4]",
           ]}
         >
-          <Image
-            src={IMAGENES[foto.img]}
-            alt={foto.alt}
-            widths={[400, 800, 1200, 1600]}
-            sizes={foto.big ? "(min-width:768px) 66vw, 100vw" : "(min-width:768px) 33vw, 50vw"}
-            loading="lazy"
-            class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
-          />
+          {esRemota(foto.img) ? (
+            <img
+              src={optimizar(foto.img)}
+              alt={foto.alt}
+              loading="lazy"
+              class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+            />
+          ) : (
+            <Image
+              src={IMAGENES[foto.img]}
+              alt={foto.alt}
+              widths={[400, 800, 1200, 1600]}
+              sizes={foto.big ? "(min-width:768px) 66vw, 100vw" : "(min-width:768px) 33vw, 50vw"}
+              loading="lazy"
+              class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+            />
+          )}
           <span class="tile-caption pointer-events-none absolute bottom-0 w-full px-4 pt-10 pb-3.5 text-sm font-medium text-white">
             {foto.titulo}
           </span>
