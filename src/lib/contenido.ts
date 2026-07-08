@@ -61,6 +61,14 @@ export interface Pregunta {
   a: string;
 }
 
+export interface Contacto {
+  telefono: string; // internacional sin "+" (ej. 573145678901)
+  email: string;
+  ubicacion: string;
+  instagram: string;
+  coords: { lat: number; lon: number };
+}
+
 export interface Contenido {
   hero: Hero;
   galeria: Foto[];
@@ -74,6 +82,7 @@ export interface Contenido {
   footer: { tagline: string; reservaTexto: string; reservaLabel: string };
   nav: { marca: string; ctaReserva: string };
   seo: { titulo: string; descripcion: string; nombreNegocio: string };
+  contacto: Contacto;
 }
 
 export const contenido = datos as Contenido;

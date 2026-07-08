@@ -32,7 +32,8 @@ const TABS = [
   { id: "domos", label: "Domos" },
   { id: "galeria", label: "Galería" },
   { id: "faq", label: "FAQ" },
-  { id: "info", label: "Info y contacto" },
+  { id: "contacto", label: "Contacto" },
+  { id: "info", label: "Textos varios" },
 ];
 const INICIAL = TABS[0].id;
 
@@ -82,6 +83,12 @@ const SECCIONES = [
   { clave: "nav", tab: "info", titulo: "Navegación", campos: [
     { k: "marca", label: "Nombre de marca" },
     { k: "ctaReserva", label: "Botón de reserva" },
+  ] },
+  { clave: "contacto", tab: "contacto", titulo: "Datos de contacto", campos: [
+    { k: "telefono", label: "WhatsApp/teléfono — internacional, solo números, sin + (ej. 573145678901)" },
+    { k: "email", label: "Email" },
+    { k: "ubicacion", label: "Ubicación (ciudad, ej. Jardín, Antioquia)" },
+    { k: "instagram", label: "URL de Instagram (https://…)" },
   ] },
 ];
 
@@ -218,6 +225,19 @@ const agregarCls = "self-start rounded-full border border-linea px-4 py-2 text-s
               ))}
             </div>
             <button type="button" data-agregar="lista-faq" class={agregarCls}>+ Agregar pregunta</button>
+          </fieldset>
+
+          <fieldset data-panel="contacto" hidden={true} class={fieldCls}>
+            <legend class={legendCls}>Ubicación en el mapa (coordenadas)</legend>
+            <p class="text-sm text-tenue">En Google Maps: clic derecho sobre el punto → aparecen dos números. El primero es la latitud, el segundo la longitud.</p>
+            <label class="flex flex-col gap-2 text-sm">
+              Latitud
+              <input data-coord="lat" value={contenido.contacto.coords.lat} inputmode="decimal" class={inputCls} />
+            </label>
+            <label class="flex flex-col gap-2 text-sm">
+              Longitud
+              <input data-coord="lon" value={contenido.contacto.coords.lon} inputmode="decimal" class={inputCls} />
+            </label>
           </fieldset>
 
           <div class="sticky bottom-4 flex items-center gap-4 rounded-full border border-linea bg-noche-deep/90 px-6 py-3 backdrop-blur">
@@ -382,6 +402,12 @@ const agregarCls = "self-start rounded-full border border-linea px-4 py-2 text-s
               big: (f.querySelector('[data-campo="big"]') as HTMLInputElement).checked,
             }))
             .filter((g) => g.titulo || g.alt);
+
+          // Coords: objeto anidado, se recolecta aparte y se coacciona a número.
+          datos.contacto.coords = {
+            lat: Number((form.querySelector('[data-coord="lat"]') as HTMLInputElement).value),
+            lon: Number((form.querySelector('[data-coord="lon"]') as HTMLInputElement).value),
+          };
 
           estado!.textContent = "Guardando…";
           estado!.className = "text-sm text-tenue";

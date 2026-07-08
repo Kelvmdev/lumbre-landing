@@ -156,5 +156,15 @@
     "titulo": "LUMBRE · Glamping bajo las estrellas",
     "descripcion": "Un domo geodésico en el bosque, el silencio de la naturaleza y un cielo que se enciende al caer la noche. Desconecta de todo en LUMBRE.",
     "nombreNegocio": "LUMBRE Glamping"
+  },
+  "contacto": {
+    "telefono": "573145678900",
+    "email": "hola@lumbre.co",
+    "ubicacion": "Jardín, Antioquia",
+    "instagram": "https://instagram.com/lumbre.glamping",
+    "coords": {
+      "lat": 5.5983,
+      "lon": -75.8186
+    }
   }
 }

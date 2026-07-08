@@ -1,7 +1,12 @@
 // Enlaces del sitio, en UN solo lugar (DRY). Reserva = WhatsApp, el canal
 // natural en LatAm para este tipo de negocio.
-// DEMO: datos ficticios coherentes (glamping ubicado en Jardín, Antioquia).
-const TELEFONO = "573145678901"; // formato internacional sin "+"
+// Los DATOS de contacto (teléfono, email, ubicación, coords, redes) se editan
+// en el CMS (data.json → contenido.contacto). Aquí queda solo la LÓGICA:
+// helpers de WhatsApp, plantillas de mensaje y la navegación.
+import { contenido } from "./contenido";
+
+const contacto = contenido.contacto;
+const TELEFONO = contacto.telefono; // formato internacional sin "+"
 export const TELEFONO_E164 = `+${TELEFONO}`; // para JSON-LD (schema.org)
 
 export const WHATSAPP =
@@ -20,13 +25,13 @@ export const waReservaDetalle = (fecha: string, personas: string, domo: string) 
     `Hola, quiero reservar en LUMBRE 🌙\n\n📅 Llegada: ${fecha}\n👥 Personas: ${personas}\n🏕️ Domo: ${domo}`
   );
 
-export const EMAIL = "hola@lumbre.co";
-export const UBICACION = "Jardín, Antioquia";
-// Coords del pin (Jardín, Antioquia — demo). Fuente única: mapa + JSON-LD las leen.
-export const COORDS = { lat: 5.5983, lon: -75.8186 };
+export const EMAIL = contacto.email;
+export const UBICACION = contacto.ubicacion;
+// Coords del pin. Fuente única: mapa + JSON-LD las leen.
+export const COORDS = contacto.coords;
 
 export const REDES = {
-  instagram: "https://instagram.com/lumbre.glamping",
+  instagram: contacto.instagram,
   whatsapp: `https://wa.me/${TELEFONO}`,
   maps: `https://www.google.com/maps/search/?api=1&query=${COORDS.lat},${COORDS.lon}`,
 };
