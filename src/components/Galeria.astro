@@ -1,25 +1,10 @@
 ---
 import { Image } from "astro:assets";
-import domoAtardecer from "../assets/fotos/domo-atardecer.jpg";
-import senderoBosque from "../assets/fotos/sendero-bosque.jpg";
-import fogata from "../assets/fotos/fogata.jpg";
-import cieloNocturno from "../assets/fotos/cielo-nocturno.jpg";
-import interiorDomo from "../assets/fotos/interior-domo.jpg";
+import { contenido, IMAGENES } from "../lib/contenido";
 
-// Fotos de Pexels (licencia libre). `big` = tarjeta destacada (2 columnas).
-// El alt es descriptivo real (accesibilidad), el título es la etiqueta visible.
-const fotos = [
-  { img: domoAtardecer, titulo: "Domo al atardecer", big: true,
-    alt: "Domo geodésico blanco en un paisaje de montaña verde al atardecer, con cielo dorado." },
-  { img: senderoBosque, titulo: "Sendero del bosque",
-    alt: "Sendero de tierra entre árboles con niebla y luz cálida al fondo." },
-  { img: fogata, titulo: "Fogata al anochecer",
-    alt: "Persona junto a una fogata al aire libre en la hora azul del anochecer." },
-  { img: cieloNocturno, titulo: "Cielo nocturno",
-    alt: "Cielo nocturno estrellado con la Vía Láctea sobre la naturaleza." },
-  { img: interiorDomo, titulo: "Interior del domo",
-    alt: "Interior acogedor de un domo glamping con cama, luces cálidas y estufa encendida." },
-];
+// `big` = tarjeta destacada (2 columnas). El alt es descriptivo real
+// (accesibilidad), el título es la etiqueta visible.
+const fotos = contenido.galeria;
 ---
 
 <section id="galeria" class="py-20 sm:py-28 lg:py-36">
@@ -40,7 +25,7 @@ const fotos = [
           ]}
         >
           <Image
-            src={foto.img}
+            src={IMAGENES[foto.img]}
             alt={foto.alt}
             widths={[400, 800, 1200, 1600]}
             sizes={foto.big ? "(min-width:768px) 66vw, 100vw" : "(min-width:768px) 33vw, 50vw"}

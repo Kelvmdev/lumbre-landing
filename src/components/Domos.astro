@@ -1,38 +1,9 @@
 ---
 import { Image } from "astro:assets";
-import domoAtardecer from "../assets/fotos/domo-atardecer.jpg";
-import interiorDomo from "../assets/fotos/interior-domo.jpg";
-import fogata from "../assets/fotos/fogata.jpg";
 import { waReserva } from "../lib/enlaces";
+import { contenido, IMAGENES } from "../lib/contenido";
 
-// DEMO: 3 domos ficticios coherentes (glamping en Jardín, Antioquia).
-// Precios en COP, rango realista de glamping en Colombia.
-const domos = [
-  {
-    nombre: "Domo Estrella",
-    img: domoAtardecer,
-    alt: "Domo geodésico blanco sobre montaña verde al atardecer, con cielo dorado.",
-    capacidad: "2 personas",
-    precio: "420.000",
-    detalles: ["Cama king frente al ventanal", "Baño privado con agua caliente", "Terraza con hamaca"],
-  },
-  {
-    nombre: "Domo Luna",
-    img: interiorDomo,
-    alt: "Interior acogedor de un domo con cama, luces cálidas y estufa encendida.",
-    capacidad: "2 personas",
-    precio: "520.000",
-    detalles: ["Tina de inmersión bajo el cielo", "Estufa de leña interior", "Desayuno de campo incluido"],
-  },
-  {
-    nombre: "Domo Fuego",
-    img: fogata,
-    alt: "Fogata al aire libre junto a un domo en la hora azul del anochecer.",
-    capacidad: "4 personas",
-    precio: "680.000",
-    detalles: ["Dos ambientes, ideal familias", "Fogón privado y asador", "Cena bajo las estrellas incluida"],
-  },
-];
+const domos = contenido.domos;
 ---
 
 <section id="domos" class="py-20 sm:py-28 lg:py-36">
@@ -52,7 +23,7 @@ const domos = [
         <article class="reveal group flex flex-col overflow-hidden rounded-2xl border border-linea bg-[#2a2a4a47]">
           <div class="relative aspect-[4/3] overflow-hidden">
             <Image
-              src={d.img}
+              src={IMAGENES[d.img]}
               alt={d.alt}
               widths={[400, 800, 1200]}
               sizes="(min-width:768px) 33vw, 100vw"

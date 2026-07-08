@@ -1,0 +1,47 @@
+{
+  "galeria": [
+    { "img": "domo-atardecer", "titulo": "Domo al atardecer", "big": true, "alt": "Domo geodésico blanco en un paisaje de montaña verde al atardecer, con cielo dorado." },
+    { "img": "sendero-bosque", "titulo": "Sendero del bosque", "big": false, "alt": "Sendero de tierra entre árboles con niebla y luz cálida al fondo." },
+    { "img": "fogata", "titulo": "Fogata al anochecer", "big": false, "alt": "Persona junto a una fogata al aire libre en la hora azul del anochecer." },
+    { "img": "cielo-nocturno", "titulo": "Cielo nocturno", "big": false, "alt": "Cielo nocturno estrellado con la Vía Láctea sobre la naturaleza." },
+    { "img": "interior-domo", "titulo": "Interior del domo", "big": false, "alt": "Interior acogedor de un domo glamping con cama, luces cálidas y estufa encendida." }
+  ],
+  "domos": [
+    {
+      "nombre": "Domo Estrella",
+      "img": "domo-atardecer",
+      "alt": "Domo geodésico blanco sobre montaña verde al atardecer, con cielo dorado.",
+      "capacidad": "2 personas",
+      "precio": "420.000",
+      "detalles": [
+        "Cama king frente al ventanal",
+        "Baño privado con agua caliente",
+        "Terraza con hamaca"
+      ]
+    },
+    {
+      "nombre": "Domo Luna",
+      "img": "interior-domo",
+      "alt": "Interior acogedor de un domo con cama, luces cálidas y estufa encendida.",
+      "capacidad": "2 personas",
+      "precio": "520.000",
+      "detalles": [
+        "Tina de inmersión bajo el cielo",
+        "Estufa de leña interior",
+        "Desayuno de campo incluido"
+      ]
+    },
+    {
+      "nombre": "Domo Fuego",
+      "img": "fogata",
+      "alt": "Fogata al aire libre junto a un domo en la hora azul del anochecer.",
+      "capacidad": "4 personas",
+      "precio": "680.000",
+      "detalles": [
+        "Dos ambientes, ideal familias",
+        "Fogón privado y asador",
+        "Cena bajo las estrellas incluida"
+      ]
+    }
+  ]
+}
