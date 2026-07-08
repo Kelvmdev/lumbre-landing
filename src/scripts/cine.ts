@@ -75,7 +75,7 @@ function cine() {
 
   // 1) Entrada del hero al cargar (escalonada).
   const heroItems = gsap.utils.toArray<HTMLElement>(
-    "#contenido header .eyebrow, #contenido header h1, #contenido header .lede, #contenido header .hero-cta"
+    "#inicio .eyebrow, #inicio h1, #inicio .lede, #inicio .hero-cta"
   );
   if (heroItems.length) {
     gsap.from(heroItems, {
@@ -85,7 +85,7 @@ function cine() {
 
   // 2) Parallax del bosque: cada capa se mueve según su data-speed mientras
   //    haces scroll por el hero (las cercanas más → sensación de profundidad).
-  const header = document.querySelector("#contenido header");
+  const header = document.getElementById("inicio");
   if (header) {
     gsap.utils.toArray<HTMLElement>(".capa").forEach((capa) => {
       const speed = parseFloat(capa.dataset.speed || "0");

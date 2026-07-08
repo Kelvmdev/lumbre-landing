@@ -1,12 +1,9 @@
 ---
-import { WHATSAPP, REDES } from "../lib/enlaces";
+import { WHATSAPP, REDES, TELEFONO_E164, EMAIL, UBICACION, NAV } from "../lib/enlaces";
 const anio = new Date().getFullYear();
 
-const explorar = [
-  { href: "#exp", texto: "Experiencia" },
-  { href: "#domos", texto: "Domos" },
-  { href: "#galeria", texto: "Galería" },
-];
+// mismas anclas del nav, sin "Contacto" (el footer ya tiene su sección de contacto)
+const explorar = NAV.filter((e) => e.href !== "#contacto");
 
 const redes = [
   { href: REDES.instagram, texto: "Instagram" },
@@ -43,9 +40,9 @@ const redes = [
       <div>
         <h3 class="font-body text-xs tracking-[0.2em] text-dorado-suave uppercase">Contacto</h3>
         <ul class="mt-4 space-y-2 font-body text-sm">
-          <li><a href="tel:+573000000000" class="text-tenue transition hover:text-hueso">+57 300 000 0000</a></li>
-          <li><a href="mailto:hola@lumbre.co" class="text-tenue transition hover:text-hueso">hola@lumbre.co</a></li>
-          <li><span class="text-tenue">Vereda El Bosque, Antioquia</span></li>
+          <li><a href={`tel:${TELEFONO_E164}`} class="text-tenue transition hover:text-hueso">+57 314 567 8901</a></li>
+          <li><a href={`mailto:${EMAIL}`} class="text-tenue transition hover:text-hueso">{EMAIL}</a></li>
+          <li><span class="text-tenue">{UBICACION}</span></li>
         </ul>
       </div>
 
@@ -65,7 +62,15 @@ const redes = [
     </div>
 
     <div class="reveal mt-14 flex flex-col items-center justify-between gap-3 border-t border-linea pt-6 font-body text-xs text-tenue sm:flex-row">
-      <p>© {anio} LUMBRE Glamping. Concepto de portafolio.</p>
+      <p>
+        © {anio} LUMBRE Glamping · Sitio por
+        <a
+          href="https://mi-portafolio-eta-hazel.vercel.app"
+          target="_blank"
+          rel="noopener"
+          class="text-dorado-suave underline underline-offset-2 transition hover:text-hueso"
+        >Kervin Martínez</a>
+      </p>
       <div class="flex gap-4">
         {redes.map((r) => (
           <a href={r.href} target="_blank" rel="noopener" class="transition hover:text-hueso">{r.texto}</a>
