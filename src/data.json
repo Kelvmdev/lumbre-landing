@@ -10,32 +10,32 @@
     {
       "img": "domo-atardecer",
       "titulo": "Domo al atardecer",
-      "big": true,
-      "alt": "Domo geodésico blanco en un paisaje de montaña verde al atardecer, con cielo dorado."
+      "alt": "Domo geodésico blanco en un paisaje de montaña verde al atardecer, con cielo dorado.",
+      "big": true
     },
     {
       "img": "sendero-bosque",
       "titulo": "Sendero del bosque",
-      "big": false,
-      "alt": "Sendero de tierra entre árboles con niebla y luz cálida al fondo."
+      "alt": "Sendero de tierra entre árboles con niebla y luz cálida al fondo.",
+      "big": false
     },
     {
       "img": "fogata",
       "titulo": "Fogata al anochecer",
-      "big": false,
-      "alt": "Persona junto a una fogata al aire libre en la hora azul del anochecer."
+      "alt": "Persona junto a una fogata al aire libre en la hora azul del anochecer.",
+      "big": false
     },
     {
       "img": "cielo-nocturno",
       "titulo": "Cielo nocturno",
-      "big": false,
-      "alt": "Cielo nocturno estrellado con la Vía Láctea sobre la naturaleza."
+      "alt": "Cielo nocturno estrellado con la Vía Láctea sobre la naturaleza.",
+      "big": false
     },
     {
       "img": "interior-domo",
       "titulo": "Interior del domo",
-      "big": false,
-      "alt": "Interior acogedor de un domo glamping con cama, luces cálidas y estufa encendida."
+      "alt": "Interior acogedor de un domo glamping con cama, luces cálidas y estufa encendida.",
+      "big": false
     }
   ],
   "domos": [
@@ -68,7 +68,7 @@
       "img": "fogata",
       "alt": "Fogata al aire libre junto a un domo en la hora azul del anochecer.",
       "capacidad": "4 personas",
-      "precio": "680.000",
+      "precio": "690.000",
       "detalles": [
         "Dos ambientes, ideal familias",
         "Fogón privado y asador",
