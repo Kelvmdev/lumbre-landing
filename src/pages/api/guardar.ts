@@ -6,6 +6,17 @@ import { guardarDatos } from "../../lib/repo";
 
 export const prerender = false;
 
+// Secciones que data.json DEBE tener. Si el POST no las trae todas, se rechaza
+// (evita que un guardado incompleto/corrupto sobreescriba el archivo y rompa
+// el sitio en vivo). Las listas además deben ser arrays.
+const REQUERIDAS = ["hero", "galeria", "domos", "cielo", "experiencia", "faq", "mapa", "reserva", "cta", "footer", "nav", "seo"];
+function formaValida(d: unknown): boolean {
+  if (!d || typeof d !== "object") return false;
+  const o = d as Record<string, unknown>;
+  if (!REQUERIDAS.every((k) => k in o)) return false;
+  return Array.isArray(o.galeria) && Array.isArray(o.domos);
+}
+
 export const POST: APIRoute = async ({ request, cookies }) => {
   if (!tokenValido(cookies.get(COOKIE)?.value)) {
     return new Response("No autorizado", { status: 401 });
@@ -15,6 +26,9 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     datos = await request.json();
   } catch {
     return new Response("JSON inválido", { status: 400 });
+  }
+  if (!formaValida(datos)) {
+    return new Response("Datos incompletos: faltan secciones obligatorias", { status: 400 });
   }
   try {
     await guardarDatos(datos);
