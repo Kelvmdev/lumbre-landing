@@ -1,0 +1,63 @@
+---
+// Panel /admin — SSR (lee la cookie, nunca se prerenderiza ni se indexa).
+// Fase 2: solo login/logout. El editor de contenido llega en la Fase 3.
+import "../../styles/global.css";
+import { COOKIE, tokenValido } from "../../lib/auth";
+
+export const prerender = false;
+
+const autenticado = tokenValido(Astro.cookies.get(COOKIE)?.value);
+const errorLogin = Astro.url.searchParams.has("error");
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Panel · LUMBRE</title>
+  </head>
+  <body class="flex min-h-svh flex-col items-center justify-center bg-noche-deep px-6 font-body text-hueso antialiased">
+    {autenticado ? (
+      <div class="w-full max-w-md text-center">
+        <h1 class="font-display text-3xl">Sesión iniciada</h1>
+        <p class="mt-3 text-tenue">El editor de contenido llega en la Fase 3.</p>
+        <form method="POST" action="/api/logout" class="mt-8">
+          <button
+            type="submit"
+            class="rounded-full border border-linea px-6 py-2.5 text-sm transition hover:border-dorado-suave hover:text-dorado-suave active:scale-95"
+          >
+            Cerrar sesión
+          </button>
+        </form>
+      </div>
+    ) : (
+      <form method="POST" action="/api/login" class="w-full max-w-sm">
+        <h1 class="font-display text-3xl">Panel LUMBRE</h1>
+        <p class="mt-2 text-sm text-tenue">Entra para editar el contenido del sitio.</p>
+
+        <label for="clave" class="mt-8 block text-sm">Contraseña</label>
+        <input
+          id="clave"
+          name="clave"
+          type="password"
+          required
+          autocomplete="current-password"
+          class="mt-2 w-full rounded-xl border border-linea bg-transparent px-4 py-2.5 text-hueso transition focus-visible:border-dorado-suave focus-visible:outline-none"
+        />
+
+        {errorLogin && (
+          <p role="alert" class="mt-3 text-sm text-dorado-suave">Contraseña incorrecta.</p>
+        )}
+
+        <button
+          type="submit"
+          class="mt-6 w-full rounded-full bg-dorado px-6 py-3 text-sm font-semibold text-noche-deep transition duration-150 hover:shadow-[0_6px_26px_#e8a54b8c] active:scale-95"
+        >
+          Entrar
+        </button>
+      </form>
+    )}
+  </body>
+</html>
