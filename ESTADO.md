@@ -90,5 +90,9 @@ Contraste AA (ratios ~5:1–9:1), foco visible global (`:focus-visible`), reduce
 - Preview reusa puerto: si 4321/2/3 ocupados, sube a 4324+.
 - **Push fallaba con "Out of memory, malloc 500MB":** `http.postBuffer` local estaba en `524288000` (500MiB, fix viejo). Con RAM justa git no lo reserva → bajado a `10485760` (10MiB). Si vuelve a fallar el push por OOM, revisar `git config --get http.postBuffer`.
 - **Build hace OOM intermitente (zlib/esbuild "insufficient memory"):** máquina con poca RAM libre; reintentar 1-2 veces suele bastar. Ayuda cerrar previews huérfanos (`taskkill` por puerto 432x) y pestañas Chrome.
+- **📁 UBICACIÓN NUEVA (8 jul):** el proyecto se movió a `C:\Users\pc\Documents\Trabajos\Embudo-mio\Embudo\Landings\lumbre-landing` (convención: TODO demo va en `...\Embudo\Landings`). La ruta vieja (`...\Trabajos\Landings\Proyectos\`) ya no existe.
+- **Puerto dev:** el 4321 lo suele ocupar OTRO proyecto (Public House) → lumbre arranca en 4322. Leer el puerto real del log de `npm run dev`, no asumir 4321.
+- **Secretos:** `.env.local` lleno (8 vars) local Y en Vercel. Nunca mostrar valores. La contraseña admin la eligió Kervin.
+- **Astro 5 → adapter `@astrojs/vercel@^8`** (NO v11, que pide Astro 7). `security:{checkOrigin:false}` es obligatorio o el form de /admin da "Cross-site POST forbidden" en Vercel.
 
-<sub>actualizado 2026-07-08 · BLOQUES 🟢 y 🟡 COMPLETOS y desplegados. 🔴 #13 CMS: Fase 1a (commit `6a6142a`) + **Fase 1b HECHA en local (falta commitear)** = TODOS los textos leen de `src/data.json`, build sin cambio visual verificado. PRÓXIMO = commitear 1b, decidir mover contacto a data.json, y arrancar Fases 2-5 (necesitan secretos). Último commit: `f177d32`.</sub>
+<sub>actualizado 2026-07-08 (sesión CMS) · 🔴 #13 CMS: **Fases 1a·1b·2·3(texto) HECHAS, pushed y PROBADAS EN PROD** (panel /admin edita 10 secciones de texto = 29 campos; ciclo editar→GitHub→Vercel→vivo funciona). Último commit: `07c9af7`. **PRÓXIMO = Fase 3c (listas: domos/galería/faq/features con agregar-quitar) + Fase 4 (subida Cloudinary)**, hacerlas juntas. Ver ⏭️ del encabezado y §#13. Antes de codear: `git pull --no-rebase --no-edit`.</sub>
