@@ -3,11 +3,13 @@
 // Fase 2: solo login/logout. El editor de contenido llega en la Fase 3.
 import "../../styles/global.css";
 import { COOKIE, tokenValido } from "../../lib/auth";
+import { contenido } from "../../lib/contenido";
 
 export const prerender = false;
 
 const autenticado = tokenValido(Astro.cookies.get(COOKIE)?.value);
 const errorLogin = Astro.url.searchParams.has("error");
+const hero = contenido.hero;
 ---
 
 <!doctype html>
@@ -18,20 +20,89 @@ const errorLogin = Astro.url.searchParams.has("error");
     <meta name="robots" content="noindex, nofollow" />
     <title>Panel · LUMBRE</title>
   </head>
-  <body class="flex min-h-svh flex-col items-center justify-center bg-noche-deep px-6 font-body text-hueso antialiased">
+  <body class="min-h-svh bg-noche-deep px-6 py-10 font-body text-hueso antialiased">
     {autenticado ? (
-      <div class="w-full max-w-md text-center">
-        <h1 class="font-display text-3xl">Sesión iniciada</h1>
-        <p class="mt-3 text-tenue">El editor de contenido llega en la Fase 3.</p>
-        <form method="POST" action="/api/logout" class="mt-8">
-          <button
-            type="submit"
-            class="rounded-full border border-linea px-6 py-2.5 text-sm transition hover:border-dorado-suave hover:text-dorado-suave active:scale-95"
-          >
-            Cerrar sesión
-          </button>
+      <div class="mx-auto w-full max-w-2xl">
+        <header class="flex items-center justify-between border-b border-linea pb-5">
+          <h1 class="font-display text-3xl">Panel LUMBRE</h1>
+          <form method="POST" action="/api/logout">
+            <button type="submit" class="rounded-full border border-linea px-4 py-2 text-sm transition hover:border-dorado-suave hover:text-dorado-suave active:scale-95">
+              Cerrar sesión
+            </button>
+          </form>
+        </header>
+
+        <form id="editor" class="mt-8 flex flex-col gap-6">
+          <fieldset class="flex flex-col gap-5 rounded-2xl border border-linea p-6">
+            <legend class="px-2 font-display text-xl text-dorado-suave">Hero (portada)</legend>
+
+            <label class="flex flex-col gap-2 text-sm">
+              Etiqueta superior
+              <input data-campo="eyebrow" value={hero.eyebrow} class="rounded-xl border border-linea bg-transparent px-4 py-2.5 text-hueso focus-visible:border-dorado-suave focus-visible:outline-none" />
+            </label>
+
+            <label class="flex flex-col gap-2 text-sm">
+              Título <span class="text-tenue">(admite HTML: {"<br />"} para salto, {"<em>…</em>"} para dorado)</span>
+              <textarea data-campo="titulo" rows="2" class="rounded-xl border border-linea bg-transparent px-4 py-2.5 font-mono text-sm text-hueso focus-visible:border-dorado-suave focus-visible:outline-none">{hero.titulo}</textarea>
+            </label>
+
+            <label class="flex flex-col gap-2 text-sm">
+              Subtítulo
+              <textarea data-campo="lede" rows="3" class="rounded-xl border border-linea bg-transparent px-4 py-2.5 text-hueso focus-visible:border-dorado-suave focus-visible:outline-none">{hero.lede}</textarea>
+            </label>
+
+            <label class="flex flex-col gap-2 text-sm">
+              Botón principal
+              <input data-campo="ctaPrimario" value={hero.ctaPrimario} class="rounded-xl border border-linea bg-transparent px-4 py-2.5 text-hueso focus-visible:border-dorado-suave focus-visible:outline-none" />
+            </label>
+
+            <label class="flex flex-col gap-2 text-sm">
+              Botón secundario
+              <input data-campo="ctaSecundario" value={hero.ctaSecundario} class="rounded-xl border border-linea bg-transparent px-4 py-2.5 text-hueso focus-visible:border-dorado-suave focus-visible:outline-none" />
+            </label>
+          </fieldset>
+
+          <div class="flex items-center gap-4">
+            <button type="submit" class="rounded-full bg-dorado px-8 py-3 text-sm font-semibold text-noche-deep transition duration-150 hover:shadow-[0_6px_26px_#e8a54b8c] active:scale-95">
+              Guardar cambios
+            </button>
+            <p id="estado" role="status" class="text-sm text-tenue"></p>
+          </div>
         </form>
       </div>
+
+      <script is:inline set:html={`window.__CONTENIDO__ = ${JSON.stringify(contenido)};`}></script>
+      <script>
+        const form = document.getElementById("editor");
+        const estado = document.getElementById("estado");
+        form?.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          // Blindaje "mina": partir del contenido original y sobreescribir solo lo editado.
+          const original = (window as any).__CONTENIDO__;
+          const hero = { ...original.hero };
+          form.querySelectorAll("[data-campo]").forEach((el) => {
+            hero[(el as HTMLElement).dataset.campo!] = (el as HTMLInputElement | HTMLTextAreaElement).value;
+          });
+          const datos = { ...original, hero };
+
+          estado!.textContent = "Guardando…";
+          estado!.className = "text-sm text-tenue";
+          try {
+            const r = await fetch("/api/guardar", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(datos),
+            });
+            if (!r.ok) throw new Error(await r.text());
+            (window as any).__CONTENIDO__ = datos;
+            estado!.textContent = "✓ Guardado. En prod el sitio se actualiza en ~1 min.";
+            estado!.className = "text-sm text-dorado-suave";
+          } catch (err) {
+            estado!.textContent = "✗ " + (err as Error).message;
+            estado!.className = "text-sm text-dorado-suave";
+          }
+        });
+      </script>
     ) : (
       <form method="POST" action="/api/login" class="w-full max-w-sm">
         <h1 class="font-display text-3xl">Panel LUMBRE</h1>
