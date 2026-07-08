@@ -51,7 +51,7 @@ Auditoría doble (yo + agente revisor-final) contra manual 01/03/04/05/10. Orden
 ### 🟡 MEDIA (una sesión c/u)
 7. ✅ **HECHO (8 jul, commit `fd12f2b`, desplegado)** — `Domos.astro`: 3 domos (Estrella/Luna/Fuego) con foto, capacidad, precio COP (demo) y features; cada "Reservar" abre WhatsApp con el domo prellenado (helper `waReserva` en enlaces.ts). `#domos` movido de CTA a la sección real. FALTA: que Kervin valide nombres/precios demo en vivo.
 8. **Formulario de reserva** (fecha + nº personas → arma mensaje WhatsApp con prefill, patrón checkout-WhatsApp tema 09; o HubSpot tema 03 + `/gracias`). Hoy los 4 CTAs son el mismo `wa.me` con texto fijo. En desktop WhatsApp es fricción → un form o `mailto:` visible ayuda.
-9. **Ubicación/mapa** (tema 02) — iframe Google anti-hijack; glamping se beneficia de "cómo llegar".
+9. ✅ **HECHO (8 jul, commit `edd652e`, desplegado)** — `Mapa.astro`: sección "Cómo llegar" 2 columnas (info + iframe Google embed enmarcado, tema noche con filtro oscuro + overlay anti-hijack, patrón manual-02). Coords centralizadas en `enlaces.ts` (`COORDS` Jardín demo); Layout JSON-LD y `REDES.maps` las leen (fin del hardcode duplicado). Va entre Domos y Faq.
 10. ✅ **VERIFICADO OK (8 jul)** — Kervin confirmó en DevTools a 320px: los 2 titulares grandes NO sobresalen ni envuelven feo. Los espacios permiten wrap y `overflow-x:clip` evita scroll. Sin cambios (YAGNI).
 11. **PageSpeed en vivo (número)** — pendiente: API pública con cuota agotada el 7 jul. Correr manual en pagespeed.web.dev (móvil, 2 veces) o reintentar API.
 12. **Legales** (privacidad/términos) o quitar del footer — opcional en demo.
@@ -71,4 +71,4 @@ Contraste AA (ratios ~5:1–9:1), foco visible global (`:focus-visible`), reduce
 - El degradado tarde→noche lo hace el CSS (`body`), GSAP solo lo suaviza con Lenis; funciona sin JS.
 - Preview reusa puerto: si 4321/2/3 ocupados, sube a 4324+.
 
-<sub>actualizado 2026-07-08 · bloque 🟢 completo (00e288d) + 🟡#7 Domos (fd12f2b) desplegados; 🟡#10 responsive 320px verificado OK (sin cambios). SIGUE bloque 🟡: #8 formulario, #9 mapa, #11 PageSpeed, #12 legales.</sub>
+<sub>actualizado 2026-07-08 · bloque 🟢 completo (00e288d) + 🟡 #7 Domos (fd12f2b) + #9 Mapa (edd652e) desplegados; #10 responsive verificado OK. SIGUE bloque 🟡: #8 formulario, #11 PageSpeed, #12 legales.</sub>

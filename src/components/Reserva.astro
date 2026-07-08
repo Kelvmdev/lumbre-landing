@@ -1,0 +1,107 @@
+---
+// Formulario de reserva → arma un mensaje de WhatsApp (sin backend).
+// Patrón checkout-WhatsApp (manual-09): wa.me + encodeURIComponent, popup dentro
+// del clic. Las opciones de domo deben coincidir con Domos.astro.
+---
+
+<section id="reservar" class="py-20 sm:py-28 lg:py-36">
+  <div class="mx-auto max-w-3xl px-5 sm:px-8">
+    <div class="reveal mb-8 text-center sm:mb-10">
+      <p class="mb-2 text-xs tracking-[0.24em] text-dorado-suave uppercase">Reserva</p>
+      <h2 class="font-display text-3xl font-normal sm:text-4xl lg:text-5xl">Aparta tu noche</h2>
+      <p class="mt-4 text-tenue">
+        Cuéntanos cuándo y cuántos son. Armamos tu reserva y la confirmamos por WhatsApp.
+      </p>
+    </div>
+
+    <form id="form-reserva" novalidate class="reveal rounded-2xl border border-linea bg-[#2a2a4a47] p-6 sm:p-8">
+      <div class="grid grid-cols-1 gap-5 sm:grid-cols-3">
+        <div class="flex flex-col gap-2">
+          <label for="r-fecha" class="font-body text-sm text-hueso">Fecha de llegada</label>
+          <input
+            id="r-fecha"
+            name="fecha"
+            type="date"
+            required
+            class="rounded-xl border border-linea bg-noche-deep px-4 py-2.5 font-body text-hueso [color-scheme:dark] transition focus-visible:border-dorado-suave"
+          />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="r-personas" class="font-body text-sm text-hueso">Personas</label>
+          <input
+            id="r-personas"
+            name="personas"
+            type="number"
+            min="1"
+            max="8"
+            value="2"
+            required
+            class="rounded-xl border border-linea bg-noche-deep px-4 py-2.5 font-body text-hueso transition focus-visible:border-dorado-suave"
+          />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="r-domo" class="font-body text-sm text-hueso">Domo</label>
+          <select
+            id="r-domo"
+            name="domo"
+            class="rounded-xl border border-linea bg-noche-deep px-4 py-2.5 font-body text-hueso transition focus-visible:border-dorado-suave"
+          >
+            <option>Sin preferencia</option>
+            <option>Domo Estrella</option>
+            <option>Domo Luna</option>
+            <option>Domo Fuego</option>
+          </select>
+        </div>
+      </div>
+
+      <p id="r-error" role="alert" class="mt-4 hidden font-body text-sm text-dorado-suave"></p>
+
+      <button
+        type="submit"
+        class="mt-6 w-full rounded-full bg-dorado px-8 py-3.5 font-body text-sm font-semibold text-noche-deep shadow-[0_4px_18px_#e8a54b59] transition duration-150 hover:shadow-[0_6px_26px_#e8a54b8c] active:scale-95 sm:w-auto"
+      >
+        Reservar por WhatsApp
+      </button>
+      <p class="mt-3 font-body text-xs text-tenue">Se abre WhatsApp con tu reserva escrita. No se cobra nada aquí.</p>
+    </form>
+  </div>
+</section>
+
+<script>
+  import { waReservaDetalle } from "../lib/enlaces";
+
+  const form = document.getElementById("form-reserva") as HTMLFormElement | null;
+  const inputFecha = document.getElementById("r-fecha") as HTMLInputElement | null;
+  const error = document.getElementById("r-error");
+
+  const hoy = () => new Date().toISOString().split("T")[0];
+  // No permitir fechas pasadas: el min se pone en cliente para que no quede obsoleto.
+  if (inputFecha) inputFecha.min = hoy();
+
+  const mostrarError = (msg: string) => {
+    if (!error) return;
+    error.textContent = msg;
+    error.classList.remove("hidden");
+  };
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const datos = new FormData(form);
+    const fecha = String(datos.get("fecha") || "");
+    const personas = String(datos.get("personas") || "");
+    const domo = String(datos.get("domo") || "Sin preferencia");
+
+    if (!fecha) return mostrarError("Elige una fecha de llegada.");
+    if (fecha < hoy()) return mostrarError("Esa fecha ya pasó; elige una futura.");
+    if (!(Number(personas) >= 1)) return mostrarError("Indica cuántas personas son.");
+
+    error?.classList.add("hidden");
+
+    // Fecha legible DD/MM/AAAA para el mensaje.
+    const [a, m, d] = fecha.split("-");
+    const fechaLegible = `${d}/${m}/${a}`;
+
+    // Abrir DENTRO del gesto de clic (o el navegador bloquea el popup).
+    window.open(waReservaDetalle(fechaLegible, personas, domo), "_blank", "noopener");
+  });
+</script>

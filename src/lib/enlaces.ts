@@ -13,6 +13,13 @@ export const waReserva = (domo: string) =>
   `https://wa.me/${TELEFONO}?text=` +
   encodeURIComponent(`Hola, quiero reservar el ${domo} en LUMBRE 🌙`);
 
+// WhatsApp con la reserva completa del formulario (fecha + personas + domo).
+export const waReservaDetalle = (fecha: string, personas: string, domo: string) =>
+  `https://wa.me/${TELEFONO}?text=` +
+  encodeURIComponent(
+    `Hola, quiero reservar en LUMBRE 🌙\n\n📅 Llegada: ${fecha}\n👥 Personas: ${personas}\n🏕️ Domo: ${domo}`
+  );
+
 export const EMAIL = "hola@lumbre.co";
 export const UBICACION = "Jardín, Antioquia";
 // Coords del pin (Jardín, Antioquia — demo). Fuente única: mapa + JSON-LD las leen.
