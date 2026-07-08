@@ -1,5 +1,5 @@
 ---
-import { WHATSAPP, REDES, TELEFONO_E164, EMAIL, UBICACION, NAV } from "../lib/enlaces";
+import { REDES, TELEFONO_E164, EMAIL, UBICACION, NAV } from "../lib/enlaces";
 const anio = new Date().getFullYear();
 
 // mismas anclas del nav, sin "Contacto" (el footer ya tiene su sección de contacto)
@@ -51,9 +51,7 @@ const redes = [
         <h3 class="font-body text-xs tracking-[0.2em] text-dorado-suave uppercase">Reserva</h3>
         <p class="mt-4 font-body text-sm text-tenue">Cada noche empieza al atardecer.</p>
         <a
-          href={WHATSAPP}
-          target="_blank"
-          rel="noopener"
+          href="#reservar"
           class="mt-4 inline-block rounded-full bg-dorado px-6 py-2.5 font-body text-sm font-semibold text-noche-deep transition duration-150 active:scale-95"
         >
           Reserva tu noche
