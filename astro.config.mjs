@@ -14,6 +14,10 @@ export default defineConfig({
   // Páginas públicas siguen estáticas (rápidas/cacheadas). Solo /admin y /api
   // opt-in a SSR con `export const prerender = false` (leen secretos, escriben a GitHub).
   adapter: vercel(),
+  // El checkOrigin de Astro se confunde detrás del proxy de Vercel y bloquea
+  // hasta el POST legítimo del form ("Cross-site POST forbidden"). Lo apagamos:
+  // la cookie de sesión es SameSite=Lax, que ya da la protección CSRF real.
+  security: { checkOrigin: false },
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
