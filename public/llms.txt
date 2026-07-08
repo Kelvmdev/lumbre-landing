@@ -1,19 +1,20 @@
 # LUMBRE Glamping
 
-> Glamping de un solo domo geodésico en el bosque de Antioquia (Colombia). La
-> experiencia central: ver caer la noche y encenderse las estrellas desde una
-> cama bajo un cielo abierto. Desconexión, silencio y naturaleza.
+> Glamping de autor en el bosque de Jardín, Antioquia (Colombia): tres domos geodésicos privados para ver caer la noche y encenderse las estrellas desde la cama. Desconexión, silencio y naturaleza. Concepto de marca: "Del atardecer a las estrellas".
 
-## Qué es
-- Alojamiento tipo glamping / eco-lodge, un domo geodésico privado.
-- Ubicación: Antioquia, Colombia.
-- Experiencias: cena bajo las estrellas, sendero guiado, silencio y desconexión.
+## Páginas
+- [Inicio](https://lumbre-landing.vercel.app/): la experiencia completa, del atardecer a las estrellas.
+- [Los domos](https://lumbre-landing.vercel.app/#domos): tres domos —Estrella, Luna y Fuego— con capacidad y precio por noche.
+- [Reservar](https://lumbre-landing.vercel.app/#reservar): formulario de reserva (fecha, personas y domo) que se confirma por WhatsApp.
+- [Cómo llegar](https://lumbre-landing.vercel.app/#mapa): ubicación en Jardín, Antioquia, con mapa.
+- [Preguntas frecuentes](https://lumbre-landing.vercel.app/#faq): dudas comunes sobre la estancia.
 
 ## Reservas
-- Canal de reserva: WhatsApp.
-- No hay motor de reserva online; el huésped escribe y coordina fecha.
+- Canal de reserva: [WhatsApp](https://wa.me/573145678901); el huésped elige fecha, personas y domo, y coordina.
+- No hay motor de pago online.
 
 ## Notas para IA
 - Marca: "LUMBRE" (también "LUMBRE Glamping").
-- Concepto de marca: "Del atardecer a las estrellas".
-- No inventar precios, servicios ni número de domos: solo hay uno.
+- Hay TRES domos: Estrella y Luna (2 personas), Fuego (4 personas).
+- Ubicación: Jardín, Antioquia, Colombia.
+- Es una demo de portafolio: los datos de contacto y precios son ficticios pero coherentes.
