@@ -1,17 +1,42 @@
 {
   "hero": {
-    "eyebrow": "Glamping en el bosque · Antioquia",
+    "eyebrow": "Glamping en el bosque · Medellin ",
     "titulo": "Duerme bajo<br />las <em class=\"text-dorado-suave\">estrellas</em>",
     "lede": "Un domo geodésico, el silencio del bosque y un cielo que se enciende cuando cae la noche. Sin señal, sin prisa.",
     "ctaPrimario": "Reserva tu noche",
     "ctaSecundario": "Ver los domos"
   },
   "galeria": [
-    { "img": "domo-atardecer", "titulo": "Domo al atardecer", "big": true, "alt": "Domo geodésico blanco en un paisaje de montaña verde al atardecer, con cielo dorado." },
-    { "img": "sendero-bosque", "titulo": "Sendero del bosque", "big": false, "alt": "Sendero de tierra entre árboles con niebla y luz cálida al fondo." },
-    { "img": "fogata", "titulo": "Fogata al anochecer", "big": false, "alt": "Persona junto a una fogata al aire libre en la hora azul del anochecer." },
-    { "img": "cielo-nocturno", "titulo": "Cielo nocturno", "big": false, "alt": "Cielo nocturno estrellado con la Vía Láctea sobre la naturaleza." },
-    { "img": "interior-domo", "titulo": "Interior del domo", "big": false, "alt": "Interior acogedor de un domo glamping con cama, luces cálidas y estufa encendida." }
+    {
+      "img": "domo-atardecer",
+      "titulo": "Domo al atardecer",
+      "big": true,
+      "alt": "Domo geodésico blanco en un paisaje de montaña verde al atardecer, con cielo dorado."
+    },
+    {
+      "img": "sendero-bosque",
+      "titulo": "Sendero del bosque",
+      "big": false,
+      "alt": "Sendero de tierra entre árboles con niebla y luz cálida al fondo."
+    },
+    {
+      "img": "fogata",
+      "titulo": "Fogata al anochecer",
+      "big": false,
+      "alt": "Persona junto a una fogata al aire libre en la hora azul del anochecer."
+    },
+    {
+      "img": "cielo-nocturno",
+      "titulo": "Cielo nocturno",
+      "big": false,
+      "alt": "Cielo nocturno estrellado con la Vía Láctea sobre la naturaleza."
+    },
+    {
+      "img": "interior-domo",
+      "titulo": "Interior del domo",
+      "big": false,
+      "alt": "Interior acogedor de un domo glamping con cama, luces cálidas y estufa encendida."
+    }
   ],
   "domos": [
     {
