@@ -1,6 +1,7 @@
 ---
 // Panel /admin — SSR (lee la cookie, nunca se prerenderiza ni se indexa).
-// Fase 2: solo login/logout. El editor de contenido llega en la Fase 3.
+// Editor basado en config: SECCIONES describe qué campos de texto son editables
+// y el formulario se genera solo. Las listas (domos, galería, faq…) van aparte.
 import "../../styles/global.css";
 import { COOKIE, tokenValido } from "../../lib/auth";
 import { contenido } from "../../lib/contenido";
@@ -9,7 +10,65 @@ export const prerender = false;
 
 const autenticado = tokenValido(Astro.cookies.get(COOKIE)?.value);
 const errorLogin = Astro.url.searchParams.has("error");
-const hero = contenido.hero;
+
+// Indexado dinámico: contenido está tipado, aquí lo leemos por clave.
+const C = contenido as Record<string, Record<string, string>>;
+
+// campo: k=clave en data.json · label=nombre visible · multi=textarea · html=admite etiquetas
+const HTML = "(admite HTML: <br /> salto de línea, <em>…</em> resalta en dorado)";
+const SECCIONES = [
+  { clave: "hero", titulo: "Hero (portada)", campos: [
+    { k: "eyebrow", label: "Etiqueta superior" },
+    { k: "titulo", label: `Título ${HTML}`, multi: true },
+    { k: "lede", label: "Subtítulo", multi: true },
+    { k: "ctaPrimario", label: "Botón principal" },
+    { k: "ctaSecundario", label: "Botón secundario" },
+  ] },
+  { clave: "cielo", titulo: "Sección 'El cielo se apaga'", campos: [
+    { k: "titulo", label: `Título ${HTML}`, multi: true },
+    { k: "texto", label: "Párrafo", multi: true },
+  ] },
+  { clave: "experiencia", titulo: "Experiencia (encabezado)", campos: [
+    { k: "eyebrow", label: "Etiqueta superior" },
+    { k: "titulo", label: "Título" },
+  ] },
+  { clave: "faq", titulo: "Preguntas frecuentes (encabezado)", campos: [
+    { k: "eyebrow", label: "Etiqueta superior" },
+    { k: "titulo", label: "Título" },
+  ] },
+  { clave: "mapa", titulo: "Cómo llegar", campos: [
+    { k: "eyebrow", label: "Etiqueta superior" },
+    { k: "titulo", label: `Título ${HTML}`, multi: true },
+    { k: "texto", label: "Texto (usa {ubicacion} donde va la ciudad)", multi: true },
+    { k: "cta", label: "Botón" },
+  ] },
+  { clave: "reserva", titulo: "Reserva (formulario)", campos: [
+    { k: "eyebrow", label: "Etiqueta superior" },
+    { k: "titulo", label: "Título" },
+    { k: "texto", label: "Párrafo", multi: true },
+  ] },
+  { clave: "cta", titulo: "Llamado final", campos: [
+    { k: "titulo", label: `Título ${HTML}`, multi: true },
+    { k: "texto", label: "Párrafo", multi: true },
+    { k: "label", label: "Botón" },
+  ] },
+  { clave: "footer", titulo: "Pie de página", campos: [
+    { k: "tagline", label: "Frase de marca", multi: true },
+    { k: "reservaTexto", label: "Texto de la columna Reserva" },
+    { k: "reservaLabel", label: "Botón de reserva" },
+  ] },
+  { clave: "nav", titulo: "Navegación", campos: [
+    { k: "marca", label: "Nombre de marca" },
+    { k: "ctaReserva", label: "Botón de reserva" },
+  ] },
+  { clave: "seo", titulo: "SEO (buscadores y redes)", campos: [
+    { k: "titulo", label: "Título de la pestaña / Google" },
+    { k: "descripcion", label: "Descripción para buscadores", multi: true },
+    { k: "nombreNegocio", label: "Nombre del negocio (datos estructurados)" },
+  ] },
+];
+
+const inputCls = "rounded-xl border border-linea bg-transparent px-4 py-2.5 text-hueso focus-visible:border-dorado-suave focus-visible:outline-none";
 ---
 
 <!doctype html>
@@ -33,36 +92,23 @@ const hero = contenido.hero;
         </header>
 
         <form id="editor" class="mt-8 flex flex-col gap-6">
-          <fieldset class="flex flex-col gap-5 rounded-2xl border border-linea p-6">
-            <legend class="px-2 font-display text-xl text-dorado-suave">Hero (portada)</legend>
+          {SECCIONES.map((s) => (
+            <fieldset class="flex flex-col gap-5 rounded-2xl border border-linea p-6">
+              <legend class="px-2 font-display text-xl text-dorado-suave">{s.titulo}</legend>
+              {s.campos.map((c) => (
+                <label class="flex flex-col gap-2 text-sm">
+                  {c.label}
+                  {c.multi ? (
+                    <textarea data-seccion={s.clave} data-campo={c.k} rows="2" class={inputCls}>{C[s.clave][c.k]}</textarea>
+                  ) : (
+                    <input data-seccion={s.clave} data-campo={c.k} value={C[s.clave][c.k]} class={inputCls} />
+                  )}
+                </label>
+              ))}
+            </fieldset>
+          ))}
 
-            <label class="flex flex-col gap-2 text-sm">
-              Etiqueta superior
-              <input data-campo="eyebrow" value={hero.eyebrow} class="rounded-xl border border-linea bg-transparent px-4 py-2.5 text-hueso focus-visible:border-dorado-suave focus-visible:outline-none" />
-            </label>
-
-            <label class="flex flex-col gap-2 text-sm">
-              Título <span class="text-tenue">(admite HTML: {"<br />"} para salto, {"<em>…</em>"} para dorado)</span>
-              <textarea data-campo="titulo" rows="2" class="rounded-xl border border-linea bg-transparent px-4 py-2.5 font-mono text-sm text-hueso focus-visible:border-dorado-suave focus-visible:outline-none">{hero.titulo}</textarea>
-            </label>
-
-            <label class="flex flex-col gap-2 text-sm">
-              Subtítulo
-              <textarea data-campo="lede" rows="3" class="rounded-xl border border-linea bg-transparent px-4 py-2.5 text-hueso focus-visible:border-dorado-suave focus-visible:outline-none">{hero.lede}</textarea>
-            </label>
-
-            <label class="flex flex-col gap-2 text-sm">
-              Botón principal
-              <input data-campo="ctaPrimario" value={hero.ctaPrimario} class="rounded-xl border border-linea bg-transparent px-4 py-2.5 text-hueso focus-visible:border-dorado-suave focus-visible:outline-none" />
-            </label>
-
-            <label class="flex flex-col gap-2 text-sm">
-              Botón secundario
-              <input data-campo="ctaSecundario" value={hero.ctaSecundario} class="rounded-xl border border-linea bg-transparent px-4 py-2.5 text-hueso focus-visible:border-dorado-suave focus-visible:outline-none" />
-            </label>
-          </fieldset>
-
-          <div class="flex items-center gap-4">
+          <div class="sticky bottom-4 flex items-center gap-4 rounded-full border border-linea bg-noche-deep/90 px-6 py-3 backdrop-blur">
             <button type="submit" class="rounded-full bg-dorado px-8 py-3 text-sm font-semibold text-noche-deep transition duration-150 hover:shadow-[0_6px_26px_#e8a54b8c] active:scale-95">
               Guardar cambios
             </button>
@@ -77,13 +123,15 @@ const hero = contenido.hero;
         const estado = document.getElementById("estado");
         form?.addEventListener("submit", async (e) => {
           e.preventDefault();
-          // Blindaje "mina": partir del contenido original y sobreescribir solo lo editado.
+          // Blindaje "mina": partir del contenido original (copia profunda) y
+          // sobreescribir SOLO los campos que el form recolecta. Nada se borra.
           const original = (window as any).__CONTENIDO__;
-          const hero = { ...original.hero };
-          form.querySelectorAll("[data-campo]").forEach((el) => {
-            hero[(el as HTMLElement).dataset.campo!] = (el as HTMLInputElement | HTMLTextAreaElement).value;
+          const datos = JSON.parse(JSON.stringify(original));
+          form.querySelectorAll("[data-seccion]").forEach((el) => {
+            const seccion = (el as HTMLElement).dataset.seccion!;
+            const campo = (el as HTMLElement).dataset.campo!;
+            datos[seccion][campo] = (el as HTMLInputElement | HTMLTextAreaElement).value;
           });
-          const datos = { ...original, hero };
 
           estado!.textContent = "Guardando…";
           estado!.className = "text-sm text-tenue";
