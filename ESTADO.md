@@ -1,8 +1,8 @@
 # LUMBRE — landing cinematográfica: glamping bajo las estrellas
 
-`estado: 🟢 publicada, backlog 🟢 y 🟡 COMPLETOS; 🔴 #13 CMS: Fases 1-4 HECHAS y PROBADAS. Falta solo Fase 5 (blindaje final)` · `en vivo: https://lumbre-landing.vercel.app` · `panel: /admin (vars ya en Vercel)`
+`estado: 🟢 TERMINADA. 🔴 #13 CMS COMPLETO (Fases 1-5) y PROBADO EN PROD — /admin edita textos, listas, fotos y contacto; ciclo editar→GitHub→Vercel→vivo funciona; 8 env vars en Vercel` · `en vivo: https://lumbre-landing.vercel.app` · `panel: /admin`
 
-> ⏭️ **ARRANCAR AQUÍ (próxima sesión):** CMS **Fase 5** = probar el ciclo real completo en prod + blindaje del guardado (concurrencia/sha). **Pendiente decidir:** mover contacto (enlaces.ts) a data.json para "full CMS". **REGLA:** `git pull --no-rebase --no-edit` ANTES de tocar código (el CMS edita el data.json en GitHub).
+> ✅ **CMS CERRADO (8 jul):** Fase 5 probada en prod, 8 env vars cargadas en Vercel, contacto ya movido a data.json (full CMS). Nada pendiente. **REGLA si se retoma:** `git pull --no-rebase --no-edit` ANTES de tocar código (el CMS edita el data.json en GitHub, tu copia local se desfasa).
 > 📁 **UBICACIÓN (8 jul):** el proyecto se MOVIÓ a `...\Trabajos\Landings\Proyectos\lumbre-landing`. OJO: `lumen-landing` (misma carpeta) es OTRO proyecto (landing financiera), no una copia.
 
 **Stack:** Astro 5 · Tailwind v4 (@tailwindcss/vite) · GSAP + Lenis · Fontsource (Fraunces/Inter) · 100% estático (adapter Vercel llega en CMS Fase 2)
